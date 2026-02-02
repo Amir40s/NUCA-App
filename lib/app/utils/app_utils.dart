@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nuca/app/widgets/custom_snackbar.dart';
 
 class AppUtils {
+  static bool _isSnackbarActive = false;
   static const HorizontalPadding = 20.0;
   static const VerticalPadding = 20.0;
   static bool isNullOrEmpty(String? value) {
@@ -16,8 +18,30 @@ class AppUtils {
     return v[0].toUpperCase() + v.substring(1);
   }
 
-  static void showSnack({required String title, required String message}) {
-    Get.snackbar(title, message);
+  static Color withOpacity({required Color color, required double opacity}) {
+    return color.withOpacity(opacity);
+  }
+
+  static void showMessage(
+    String text, {
+    bool isError = false,
+    required BuildContext context,
+  }) {
+    if (!context.mounted || _isSnackbarActive) return;
+
+    _isSnackbarActive = true;
+
+    IconSnackBar.show(
+      context,
+      duration: Duration(milliseconds: 1500),
+      snackBarType: isError ? SnackBarType.fail : SnackBarType.success,
+      label: text,
+      maxLines: 2,
+    );
+
+    Future.delayed(Duration(milliseconds: 1300), () {
+      _isSnackbarActive = false;
+    });
   }
 
   static Color fromHex(String hex) {

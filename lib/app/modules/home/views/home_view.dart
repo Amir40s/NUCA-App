@@ -1,22 +1,165 @@
 import 'package:flutter/material.dart';
-
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-
+import 'package:nuca/app/modules/home/views/components/scanned_food_card.dart';
+import 'package:nuca/app/modules/home/views/home_cards.dart';
+import 'package:nuca/app/routes/app_pages.dart';
+import 'package:nuca/app/utils/app_colors.dart';
+import 'package:nuca/app/widgets/app_text_widget.dart';
+import 'package:nuca/app/widgets/custom_button.dart';
+import 'package:sizer/sizer.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('HomeView'),
-        centerTitle: true,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppTextWidget(
+                text: 'Hello 👋',
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+              ),
+              Gap(1.h),
+              AppTextWidget(
+                text: 'Eat with Confidence',
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: AppColors.midGrey,
+              ),
+              Gap(2.h),
+              TextFormField(
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide(color: AppColors.lightGrey),
+                  ),
+                  prefixIcon: Icon(Icons.search),
+                  hintText: 'Search by product name, SKU, or model number',
+                ),
+              ),
+              Gap(2.5.h),
+              HomeCards(),
+              Gap(3.h),
+              Row(
+                children: [
+                  Expanded(
+                    child: AppTextWidget(
+                      text: "Recent Scans",
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: AppTextWidget(
+                      text: "See all",
+                      fontSize: 18,
+                      color: AppColors.secondary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+              ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: controller.foods.length,
+                itemBuilder: (context, index) {
+                  final food = controller.foods[index];
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: 1.h),
+                    child: ScannedFoodCard(
+                      image: food['image'] as String,
+                      title: food['title'] as String,
+                      time: food['time'] as String,
+                      price: food['price'] as String,
+                      isHalal: food['isHalal'] as bool,
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
       ),
-      body: const Center(
-        child: Text(
-          'HomeView is working',
-          style: TextStyle(fontSize: 20),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(50),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: AppTextWidget(
+                  text: 'New here ? Join our community today.',
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.midGrey,
+                ),
+              ),
+              Gap(1.5.h),
+              AppButtonWidget(
+                onPressed: () {
+                  Get.toNamed(Routes.SELECT_PREFERENCES);
+                },
+                text: "Create Account",
+                fontSize: 20,
+                width: 100.w,
+                fontWeight: FontWeight.w600,
+                height: 7.h,
+              ),
+              Gap(1.5.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      minimumSize: const Size(0, 0),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    onPressed: () {},
+                    child: const AppTextWidget(
+                      text: "Already have an account? ",
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      minimumSize: const Size(0, 0),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    onPressed: () {},
+                    child: const AppTextWidget(
+                      text: "Sign In",
+                      color: AppColors.secondary,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -7,6 +7,8 @@ abstract class Routes {
   static const SELECT_PREFERENCES = _Paths.SELECT_PREFERENCES;
   static const ON_BOARDING = _Paths.ON_BOARDING;
   static const HOME = _Paths.HOME;
+  static const LOGIN = _Paths.LOGIN;
+  static const SIGN_UP = _Paths.SIGN_UP;
 }
 
 abstract class _Paths {
@@ -15,4 +17,6 @@ abstract class _Paths {
   static const SELECT_PREFERENCES = '/select-preferences';
   static const ON_BOARDING = '/on-boarding';
   static const HOME = '/home';
+  static const LOGIN = '/login';
+  static const SIGN_UP = '/sign-up';
 }

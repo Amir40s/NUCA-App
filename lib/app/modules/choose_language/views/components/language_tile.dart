@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
-import 'package:nuca/app/utils/app_assets.dart';
 import 'package:nuca/app/utils/app_colors.dart';
 import 'package:nuca/app/widgets/app_text_widget.dart';
+import 'package:nuca/gen/assets.gen.dart';
 import 'package:sizer/sizer.dart';
 
 class LanguageTile extends StatelessWidget {
@@ -34,14 +34,16 @@ class LanguageTile extends StatelessWidget {
         ),
         child: Row(
           children: [
-            SvgPicture.asset(isSelected ? AppAssets.tick : AppAssets.circle),
+            SvgPicture.asset(
+              isSelected ? Assets.icons.tick : Assets.icons.circle,
+            ),
             Gap(2.w),
             Icon(icon, color: AppColors.textSecondary),
             Gap(2.w),
             Expanded(
               child: AppTextWidget(
                 text: title,
-                fontSize: 20.px,
+                fontSize: 18,
                 fontWeight: FontWeight.w500,
                 textAlign: TextAlign.start,
               ),

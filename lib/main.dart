@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, screenType) {
         return GetMaterialApp(
-          title: 'Text To Voice AI',
+          title: 'Nuca',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.light,
           initialRoute: AppPages.INITIAL,

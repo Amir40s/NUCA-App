@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:gap/gap.dart';
+import 'package:nuca/app/utils/export.dart';
 import 'package:nuca/app/widgets/app_text_widget.dart';
+import 'package:sizer/sizer.dart';
 
 class OnBoardingWidget extends StatelessWidget {
   final String image;
@@ -20,20 +24,21 @@ class OnBoardingWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(image, height: 280, fit: BoxFit.contain),
-          const SizedBox(height: 32),
+          SvgPicture.asset(image, height: 280.px),
+          Gap(3.2.px),
           AppTextWidget(
             text: title,
             textAlign: TextAlign.center,
-            fontSize: 24,
+            fontSize: 22,
             fontWeight: FontWeight.w700,
           ),
-          const SizedBox(height: 12),
+          Gap(6.px),
           AppTextWidget(
+            softWrap: true,
             text: subtitle,
             textAlign: TextAlign.center,
-            fontSize: 14,
-            color: Colors.black54,
+            fontSize: 18,
+            color: AppColors.midGrey,
           ),
         ],
       ),

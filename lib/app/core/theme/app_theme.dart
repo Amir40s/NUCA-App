@@ -32,11 +32,12 @@ class AppTheme {
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
+        fillColor: AppColors.primary,
+        filled: true,
         contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
         hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
         labelStyle: const TextStyle(fontSize: 12),
         errorStyle: const TextStyle(fontSize: 12),
-
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide(color: Colors.grey),

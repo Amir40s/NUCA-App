@@ -4,10 +4,14 @@ import '../modules/choose_language/bindings/choose_language_binding.dart';
 import '../modules/choose_language/views/choose_language_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/login/bindings/login_binding.dart';
+import '../modules/login/views/login_view.dart';
 import '../modules/on_boarding/bindings/on_boarding_binding.dart';
 import '../modules/on_boarding/views/on_boarding_view.dart';
 import '../modules/select_preferences/bindings/select_preferences_binding.dart';
 import '../modules/select_preferences/views/select_preferences_view.dart';
+import '../modules/signUp/bindings/sign_up_binding.dart';
+import '../modules/signUp/views/sign_up_view.dart';
 
 part 'app_routes.dart';
 
@@ -36,6 +40,16 @@ class AppPages {
       name: _Paths.HOME,
       page: () => const HomeView(),
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOGIN,
+      page: () => const LoginView(),
+      binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.SIGN_UP,
+      page: () => const SignUpView(),
+      binding: SignUpBinding(),
     ),
   ];
 }

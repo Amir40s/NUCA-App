@@ -3,14 +3,13 @@ import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
-
 import 'package:get/get.dart';
 import 'package:nuca/app/modules/select_preferences/views/components/picker_tile.dart';
 import 'package:nuca/app/routes/app_pages.dart';
-import 'package:nuca/app/utils/app_assets.dart';
 import 'package:nuca/app/utils/app_utils.dart';
 import 'package:nuca/app/widgets/app_text_widget.dart';
 import 'package:nuca/app/widgets/custom_button.dart';
+import 'package:nuca/gen/assets.gen.dart';
 import 'package:sizer/sizer.dart';
 
 import '../controllers/select_preferences_controller.dart';
@@ -54,7 +53,7 @@ class SelectPreferencesView extends GetView<SelectPreferencesController> {
               Obx(
                 () => PickerTile(
                   title: "Choose your Country",
-                  icon: AppAssets.person,
+                  icon: Assets.icons.person,
                   value: controller.selectedCountry.value,
                   onTap: () {
                     showCountryPicker(
@@ -80,7 +79,7 @@ class SelectPreferencesView extends GetView<SelectPreferencesController> {
               Obx(
                 () => PickerTile(
                   title: "e.g. ( € )",
-                  icon: AppAssets.coin,
+                  icon: Assets.icons.coin,
                   value: controller.selectedCurrency.value,
                   onTap: () {
                     showCurrencyPicker(
@@ -109,7 +108,7 @@ class SelectPreferencesView extends GetView<SelectPreferencesController> {
               Gap(2.h),
               Row(
                 children: [
-                  SvgPicture.asset(AppAssets.info),
+                  SvgPicture.asset(Assets.icons.info),
                   Gap(2.w),
                   Expanded(
                     child: AppTextWidget(
@@ -122,16 +121,30 @@ class SelectPreferencesView extends GetView<SelectPreferencesController> {
                 ],
               ),
               Gap(4.h),
-              AppButtonWidget(
-                onPressed: () {
-                  Get.toNamed(Routes.ON_BOARDING);
-                },
-                text: "Continue",
-                fontSize: 20,
-                width: 100.w,
-                fontWeight: FontWeight.w600,
-                height: 7.h,
-              ),
+              Obx(() {
+                final isValid =
+                    controller.selectedCountry.value.isNotEmpty &&
+                    controller.selectedCurrency.value.isNotEmpty;
+                return AppButtonWidget(
+                  onPressed: () {
+                    if (isValid) {
+                      Get.toNamed(Routes.ON_BOARDING);
+                    } else {
+                      AppUtils.showMessage(
+                        isError: true,
+
+                        "Please select both country and currency.",
+                        context: context,
+                      );
+                    }
+                  },
+                  text: "Continue",
+                  fontSize: 20,
+                  width: 100.w,
+                  fontWeight: FontWeight.w600,
+                  height: 7.h,
+                );
+              }),
               Gap(1.h),
             ],
           ),
