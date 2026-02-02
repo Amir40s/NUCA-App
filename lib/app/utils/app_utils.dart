@@ -1,7 +1,11 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppUtils {
+  static const HorizontalPadding = 20.0;
+  static const VerticalPadding = 20.0;
   static bool isNullOrEmpty(String? value) {
     return value == null || value.trim().isEmpty;
   }
@@ -12,7 +16,7 @@ class AppUtils {
     return v[0].toUpperCase() + v.substring(1);
   }
 
-  static void showSnack({required String title,required String message}) {
+  static void showSnack({required String title, required String message}) {
     Get.snackbar(title, message);
   }
 
@@ -35,12 +39,15 @@ class AppUtils {
     return 2; // phones
   }
 
-
   static double iconSize(BuildContext context) {
     return isTablet(context) ? 45 : 24;
-  }  static double width(BuildContext context) {
+  }
+
+  static double width(BuildContext context) {
     return isTablet(context) ? 28 : 24;
-  }  static double height(BuildContext context) {
+  }
+
+  static double height(BuildContext context) {
     return isTablet(context) ? 28 : 24;
   }
 }

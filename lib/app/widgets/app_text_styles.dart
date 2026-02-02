@@ -1,84 +1,167 @@
-import 'package:ai_photo_generator/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:nuca/core/res/statics.dart';
 
+class AppTextStyle {
+  final Statics static = Statics();
 
-class AppTextStyles {
-  static TextStyle get xlNormal =>
-      TextStyle(fontSize: 32, fontWeight: FontWeight.normal);
+  static const String defaultFont = "Nunito Sans";
 
-  static TextStyle get xlSuperBold =>
-      TextStyle(fontSize: 32, fontWeight: FontWeight.w900);
+  TextStyle _getTextStyle({
+    required double fontSize,
+    required Color color,
+    FontWeight fontWeight = FontWeight.normal,
+    String fontFamily = defaultFont,
+    TextDecoration? textDecoration = TextDecoration.none,
+    double height = 1.4,
+    Color? backgroundColor,
+    double letterSpacing = 0.0,
+  }) {
+    return TextStyle(
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      color: color,
+      fontFamily: fontFamily,
+      decoration: textDecoration,
+      height: height,
+      decorationThickness: 0.7,
+      backgroundColor: backgroundColor,
+      letterSpacing: letterSpacing,
+    );
+  }
 
-  static TextStyle get heading1 =>
-      TextStyle(fontSize: 24, fontWeight: FontWeight.bold);
+  TextStyle heading({
+    required BuildContext context,
+    Color? color,
+    double? size,
+    TextDecoration? textDecoration,
+    FontWeight fontWeight = FontWeight.w700,
+    String fontFamily = defaultFont,
+  }) {
+    return _getTextStyle(
+      fontSize: size ?? static.mainHeadingSize,
+      color: color ?? Colors.black,
+      fontWeight: fontWeight,
+      fontFamily: fontFamily,
+      textDecoration: textDecoration,
+    );
+  }
 
-  static TextStyle get heading1Normal =>
-      TextStyle(fontSize: 24, fontWeight: FontWeight.normal);
+  TextStyle buttonText({
+    required BuildContext context,
+    Color? color,
+    double? size,
+    TextDecoration? textDecoration,
+    FontWeight fontWeight = FontWeight.w700,
+    String fontFamily = defaultFont,
+  }) {
+    return _getTextStyle(
+      fontSize: size ?? static.buttonTextSize,
+      color: color ?? Colors.black,
+      fontWeight: fontWeight,
+      fontFamily: fontFamily,
+      textDecoration: textDecoration,
+    );
+  }
 
-  static TextStyle get heading2 =>
-      TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
+  TextStyle subHeading({
+    required BuildContext context,
+    Color? color,
+    double? size,
+    TextDecoration? textDecoration,
+    FontWeight fontWeight = FontWeight.w500,
+    String fontFamily = defaultFont,
+  }) {
+    return _getTextStyle(
+      fontSize: size ?? static.subHeadingSize,
+      color: color ?? Colors.black,
+      fontWeight: fontWeight,
+      fontFamily: fontFamily,
+      textDecoration: textDecoration,
+    );
+  }
 
-  static TextStyle get heading3 =>
-      TextStyle(fontSize: 18, fontWeight: FontWeight.w500);
+  TextStyle bodyText({
+    required BuildContext context,
+    Color? color,
+    double? size,
+    TextDecoration? textDecoration,
+    FontWeight fontWeight = FontWeight.w400,
+    String fontFamily = defaultFont,
+  }) {
+    return _getTextStyle(
+      fontSize: size ?? static.bodyTextSize,
+      color: color ?? Colors.black,
+      fontWeight: fontWeight,
+      fontFamily: fontFamily,
+      textDecoration: textDecoration,
+    );
+  }
 
-  static TextStyle get bodyText =>
-      TextStyle(fontSize: 16, fontWeight: FontWeight.normal,color: AppColors.black);
+  TextStyle mediumBodyText({
+    required BuildContext context,
+    Color? color,
+    double? size,
+    TextDecoration? textDecoration,
+    FontWeight fontWeight = FontWeight.w600,
+    String fontFamily = defaultFont,
+  }) {
+    return _getTextStyle(
+      fontSize: size ?? static.bodyTextSize,
+      color: color ?? Colors.black,
+      fontWeight: fontWeight,
+      fontFamily: fontFamily,
+      textDecoration: textDecoration,
+    );
+  }
 
-  static TextStyle get bodyTextBold =>
-      TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
+  TextStyle subTitle({
+    required BuildContext context,
+    Color? color,
+    double? size,
+    TextDecoration? textDecoration,
+    FontWeight fontWeight = FontWeight.w400,
+    String fontFamily = defaultFont,
+  }) {
+    return _getTextStyle(
+      fontSize: size ?? static.subtitleTextSize,
+      color: color ?? Colors.black,
+      fontWeight: fontWeight,
+      fontFamily: fontFamily,
+      textDecoration: textDecoration,
+    );
+  }
 
-  static TextStyle get caption => TextStyle(
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-    color: Colors.grey,
+  TextStyle premiumSize({
+    required BuildContext context,
+    Color? color,
+    double? size,
+    TextDecoration? textDecoration,
+    FontWeight fontWeight = FontWeight.w700,
+    String fontFamily = defaultFont,
+  }) {
+    return _getTextStyle(
+      fontSize: size ?? static.premiumTextSize,
+      color: color ?? Colors.black,
+      fontWeight: fontWeight,
+      fontFamily: fontFamily,
+      textDecoration: textDecoration,
+    );
+  }
 
-  );
-
-  static TextStyle get captionDark => TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    color: Colors.black,
-  );
-
-  static TextStyle get captionPrimary => TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    color: AppColors.primary,
-  );
-
-  static TextStyle get micro => TextStyle(
-    fontSize: 10,
-    fontWeight: FontWeight.w400,
-    color: Colors.grey,
-  );
-
-  static TextStyle get microDark => TextStyle(
-    fontSize: 10,
-    fontWeight: FontWeight.w400,
-    color: Colors.black,
-  );
-
-  static TextStyle get microPrimary => TextStyle(
-    fontSize: 10,
-    fontWeight: FontWeight.w400,
-    color: AppColors.primary,
-  );
-
-  static TextStyle get buttonText => TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w600,
-    color: Colors.white,
-  );
-
-  static TextStyle get appBarTitle =>
-      TextStyle(fontSize: 20, fontWeight: FontWeight.w700);
-
-  static TextStyle get inputText =>
-      TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
-
-  static TextStyle get inputHint => TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-    color: Colors.grey,
-  );
+  TextStyle dialogHeading({
+    required BuildContext context,
+    Color? color,
+    double? size,
+    TextDecoration? textDecoration,
+    FontWeight fontWeight = FontWeight.w600,
+    String fontFamily = defaultFont,
+  }) {
+    return _getTextStyle(
+      fontSize: size ?? static.dialogHeadingSize,
+      color: color ?? Colors.black,
+      fontWeight: fontWeight,
+      fontFamily: fontFamily,
+      textDecoration: textDecoration,
+    );
+  }
 }

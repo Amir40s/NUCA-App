@@ -1,72 +1,128 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
-import '../utils/export.dart';
-import 'custom_text.dart';
+import 'package:nuca/app/utils/app_colors.dart';
+import 'package:nuca/app/widgets/app_text_widget.dart';
+import 'package:nuca/app/widgets/style_type.dart';
 
-class CustomButton extends StatelessWidget {
-  final String label;
+class AppButtonWidget extends StatelessWidget {
   final VoidCallback? onPressed;
-  final bool isLoading;
-  final Color? color;
-  final TextStyle? textStyle;
-  final EdgeInsetsGeometry? padding;
-  final double? borderRadius;
-  final Widget? leading;
-  final double? width;
-  final double? height;
+  final String text;
 
-  const CustomButton({
+  // Sizing
+  final double? height;
+  final double? width;
+  final EdgeInsets? padding;
+
+  // Radius and borders
+  final double? radius;
+  final double borderWidth;
+  final Color? borderColor;
+
+  // Colors
+  final Color? buttonColor;
+  final Color? textColor;
+
+  // Typography
+  final FontWeight fontWeight;
+  final double? fontSize;
+  final StyleType styleType;
+
+  // Alignment
+  final Alignment alignment;
+
+  // Loader
+  final bool loader;
+  final bool isGradient, isGradientDisable;
+
+  // Icons
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+
+  const AppButtonWidget({
     super.key,
-    required this.label,
+    required this.text,
     this.onPressed,
-    this.isLoading = false,
-    this.color,
-    this.textStyle,
-    this.padding,
-    this.borderRadius,
-    this.leading,
-    this.width,
     this.height,
+    this.width,
+    this.padding,
+    this.radius,
+    this.borderWidth = 1,
+    this.borderColor,
+    this.buttonColor,
+    this.textColor,
+    this.fontWeight = FontWeight.w400,
+    this.fontSize,
+    this.styleType = StyleType.body,
+    this.alignment = Alignment.center,
+    this.loader = false,
+    this.isGradient = false,
+    this.isGradientDisable = false,
+    this.prefixIcon,
+    this.suffixIcon,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width ?? double.infinity,
-      height: height ?? 5.h,
-      child: ElevatedButton(
-        onPressed: isLoading ? null : onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color ?? AppColors.accentDark,
-          padding:
-              padding ??
-              EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.5.h),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular((borderRadius ?? 12).sp),
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (leading != null) ...[leading!, const SizedBox(width: 8)],
-            if (isLoading)
-              const SizedBox(
-                width: 18,
-                height: 18,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                ),
-              )
-            else
-              AppTextWidget(
-                text: label,
-                color: textStyle?.color ?? Colors.white,
-                fontWeight: textStyle?.fontWeight ?? FontWeight.w600,
-                fontSize: textStyle?.fontSize ?? 14,
-                textAlign: TextAlign.center,
+    final bool hasBorder = borderColor != null;
+
+    return GestureDetector(
+      onTap: loader ? null : onPressed,
+      child: Align(
+        alignment: alignment,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(radius ?? 12),
+          child: Container(
+            decoration: BoxDecoration(
+              // gradient: isGradient ? AppColors.gradient : isGradientDisable ? AppColors.disable : null,
+              // gradient: isGradientDisable
+              //     ? AppColors.disable
+              //     : isGradient
+              //     ? AppColors.gradient
+              //     : null,
+            ),
+            child: Container(
+              height: height,
+              width: width,
+              padding: padding ?? const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: buttonColor ?? AppColors.secondary,
+                borderRadius: BorderRadius.circular(radius ?? 12),
+                border: hasBorder
+                    ? Border.all(color: borderColor!, width: borderWidth)
+                    : null,
               ),
-          ],
+              child: loader
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.white,
+                        strokeWidth: 5,
+                      ),
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (prefixIcon != null) ...[
+                          prefixIcon!,
+                          const SizedBox(width: 8),
+                        ],
+                        Flexible(
+                          child: AppTextWidget(
+                            text: text,
+                            fontSize: fontSize ?? 16,
+                            fontWeight: fontWeight,
+                            color: textColor ?? AppColors.primaryLight,
+
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        if (suffixIcon != null) ...[
+                          const SizedBox(width: 8),
+                          suffixIcon!,
+                        ],
+                      ],
+                    ),
+            ),
+          ),
         ),
       ),
     );
