@@ -1,9 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpController extends GetxController {
-  //TODO: Implement SignUpController
-
-  final count = 0.obs;
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final nameFocus = FocusNode();
+  final emailFocus = FocusNode();
+  final passwordFocus = FocusNode();
   @override
   void onInit() {
     super.onInit();
@@ -18,6 +22,4 @@ class SignUpController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

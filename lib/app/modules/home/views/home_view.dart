@@ -36,15 +36,23 @@ class HomeView extends GetView<HomeController> {
               ),
               Gap(2.h),
               TextFormField(
+                readOnly: true,
+                textInputAction: TextInputAction.search,
+                onTap: () {},
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                     borderSide: BorderSide(color: AppColors.lightGrey),
                   ),
-                  prefixIcon: Icon(Icons.search),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide(color: AppColors.lightGrey),
+                  ),
+                  prefixIcon: const Icon(Icons.search),
                   hintText: 'Search by product name, SKU, or model number',
                 ),
               ),
+
               Gap(2.5.h),
               HomeCards(),
               Gap(3.h),
@@ -116,7 +124,7 @@ class HomeView extends GetView<HomeController> {
               Gap(1.5.h),
               AppButtonWidget(
                 onPressed: () {
-                  Get.toNamed(Routes.SELECT_PREFERENCES);
+                  Get.toNamed(Routes.SIGN_UP);
                 },
                 text: "Create Account",
                 fontSize: 20,

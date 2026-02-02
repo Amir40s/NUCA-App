@@ -17,6 +17,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/app_icon.png
   AssetGenImage get appIcon => const AssetGenImage('assets/icons/app_icon.png');
 
+  /// File path: assets/icons/apple.svg
+  String get apple => 'assets/icons/apple.svg';
+
   /// File path: assets/icons/bar_chart.svg
   String get barChart => 'assets/icons/bar_chart.svg';
 
@@ -28,6 +31,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/crown.svg
   String get crown => 'assets/icons/crown.svg';
+
+  /// File path: assets/icons/google.svg
+  String get google => 'assets/icons/google.svg';
 
   /// File path: assets/icons/info.svg
   String get info => 'assets/icons/info.svg';
@@ -47,10 +53,12 @@ class $AssetsIconsGen {
   /// List of all assets
   List<dynamic> get values => [
     appIcon,
+    apple,
     barChart,
     circle,
     coin,
     crown,
+    google,
     info,
     onBoarding1,
     onBoarding2,

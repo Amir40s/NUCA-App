@@ -35,27 +35,31 @@ class AppTheme {
         fillColor: AppColors.primary,
         filled: true,
         contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-        hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+        hintStyle: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          color: AppColors.midGrey,
+        ),
         labelStyle: const TextStyle(fontSize: 12),
         errorStyle: const TextStyle(fontSize: 12),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(color: Colors.grey),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(color: AppColors.primary),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(color: Colors.grey),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(color: Colors.red),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(color: Colors.red),
         ),
       ),
