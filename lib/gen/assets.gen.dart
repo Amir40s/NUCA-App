@@ -29,6 +29,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/bio.svg
   String get bio => 'assets/icons/bio.svg';
 
+  /// File path: assets/icons/camera.svg
+  String get camera => 'assets/icons/camera.svg';
+
   /// File path: assets/icons/camera_switch.svg
   String get cameraSwitch => 'assets/icons/camera_switch.svg';
 
@@ -59,6 +62,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/google.svg
   String get google => 'assets/icons/google.svg';
 
+  /// File path: assets/icons/halal_icon.svg
+  String get halalIcon => 'assets/icons/halal_icon.svg';
+
   /// File path: assets/icons/info.svg
   String get info => 'assets/icons/info.svg';
 
@@ -80,6 +86,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/person.svg
   String get person => 'assets/icons/person.svg';
 
+  /// File path: assets/icons/privcy_policy.svg
+  String get privcyPolicy => 'assets/icons/privcy_policy.svg';
+
   /// File path: assets/icons/protiens.svg
   String get protiens => 'assets/icons/protiens.svg';
 
@@ -88,6 +97,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/salt.svg
   String get salt => 'assets/icons/salt.svg';
+
+  /// File path: assets/icons/subscription_status.svg
+  String get subscriptionStatus => 'assets/icons/subscription_status.svg';
 
   /// File path: assets/icons/sugar.svg
   String get sugar => 'assets/icons/sugar.svg';
@@ -102,6 +114,7 @@ class $AssetsIconsGen {
     apple,
     barChart,
     bio,
+    camera,
     cameraSwitch,
     carbs,
     check,
@@ -112,6 +125,7 @@ class $AssetsIconsGen {
     energy,
     gmo,
     google,
+    halalIcon,
     info,
     keyboard,
     light,
@@ -119,9 +133,11 @@ class $AssetsIconsGen {
     onBoarding1,
     onBoarding2,
     person,
+    privcyPolicy,
     protiens,
     qrCode,
     salt,
+    subscriptionStatus,
     sugar,
     tick,
   ];

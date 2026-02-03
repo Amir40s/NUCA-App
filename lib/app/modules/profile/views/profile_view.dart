@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 import 'package:nuca/app/modules/profile/views/components/profile_tile.dart';
+import 'package:nuca/app/routes/app_pages.dart';
 import 'package:nuca/app/utils/app_colors.dart';
 import 'package:nuca/app/widgets/app_text_widget.dart';
 import 'package:nuca/app/widgets/custom_button.dart';
+import 'package:nuca/gen/assets.gen.dart';
 import 'package:sizer/sizer.dart';
 import '../controllers/profile_controller.dart';
 
@@ -81,10 +84,15 @@ class ProfileView extends GetView<ProfileController> {
                 fontWeight: FontWeight.w900,
               ),
               Gap(1.5.h),
-              ProfileTile(icon: Icons.person_outline, title: 'My Account'),
+              ProfileTile(
+                icon: LucideIcons.user,
+                title: 'My Account',
+                onTap: () => Get.toNamed(Routes.EDIT_PROFILE),
+              ),
               Gap(1.2.h),
               ProfileTile(
                 icon: Icons.star_border,
+                image: Assets.icons.subscriptionStatus,
                 title: 'Subscription Status',
               ),
               Gap(3.h),
@@ -98,13 +106,16 @@ class ProfileView extends GetView<ProfileController> {
               ProfileTile(
                 icon: Icons.language,
                 title: 'Language',
+                onTap: () => Get.toNamed(Routes.CHOOSE_LANGUAGE),
                 trailingText: 'English',
               ),
               Gap(1.2.h),
               ProfileTile(
                 icon: Icons.attach_money,
+                image: Assets.icons.coin,
                 title: 'Currency',
                 trailingText: '\$',
+                onTap: () => Get.toNamed(Routes.SELECT_PREFERENCES),
               ),
               Gap(3.h),
               AppTextWidget(
@@ -117,11 +128,13 @@ class ProfileView extends GetView<ProfileController> {
               ProfileTile(
                 icon: Icons.privacy_tip_outlined,
                 title: 'Privacy Policy',
+                image: Assets.icons.privcyPolicy,
               ),
               Gap(1.2.h),
               ProfileTile(
                 icon: Icons.verified_user_outlined,
                 title: 'Halal Guidelines',
+                image: Assets.icons.halalIcon,
               ),
               Gap(3.h),
               AppButtonWidget(

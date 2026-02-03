@@ -33,7 +33,16 @@ class ProfileTile extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(icon, size: 2.2.h, color: Colors.black87),
+            image == null
+                ? Icon(icon, size: 2.2.h)
+                : SvgPicture.asset(
+                    image ?? "",
+                    height: 2.h,
+                    colorFilter: ColorFilter.mode(
+                      Colors.black,
+                      BlendMode.srcIn,
+                    ),
+                  ),
             Gap(4.w),
             Expanded(
               child: AppTextWidget(
@@ -50,9 +59,7 @@ class ProfileTile extends StatelessWidget {
               ),
               Gap(2.w),
             ],
-            image == null
-                ? Icon(Icons.chevron_right, size: 2.4.h, color: Colors.black45)
-                : SvgPicture.asset(image ?? ""),
+            Icon(Icons.chevron_right, size: 2.4.h, color: Colors.black45),
           ],
         ),
       ),
