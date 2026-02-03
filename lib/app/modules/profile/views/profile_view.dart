@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-
+import 'package:nuca/app/modules/profile/views/components/profile_tile.dart';
+import 'package:nuca/app/utils/app_colors.dart';
+import 'package:nuca/app/widgets/app_text_widget.dart';
+import 'package:nuca/app/widgets/custom_button.dart';
+import 'package:sizer/sizer.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
@@ -9,14 +13,130 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ProfileView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'ProfileView is working',
-          style: TextStyle(fontSize: 20),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 4.h,
+                    backgroundImage: const NetworkImage(
+                      'https://i.pravatar.cc/300',
+                    ),
+                  ),
+                  Gap(4.w),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppTextWidget(
+                        text: 'Daniel Jones',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      Gap(0.6.h),
+                      AppTextWidget(
+                        text: 'daniel.jones@example.com',
+                        fontSize: 14,
+                        color: AppColors.midGrey,
+                      ),
+                      Gap(0.8.h),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 3.w,
+                          vertical: 0.6.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: AppColors.lightGrey),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.star,
+                              size: 14,
+                              color: Colors.orange,
+                            ),
+                            Gap(1.w),
+                            AppTextWidget(
+                              text: 'Premium',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Gap(4.h),
+              AppTextWidget(
+                text: 'Account',
+                fontSize: 16,
+                color: AppColors.midGrey,
+                fontWeight: FontWeight.w900,
+              ),
+              Gap(1.5.h),
+              ProfileTile(icon: Icons.person_outline, title: 'My Account'),
+              Gap(1.2.h),
+              ProfileTile(
+                icon: Icons.star_border,
+                title: 'Subscription Status',
+              ),
+              Gap(3.h),
+              AppTextWidget(
+                text: 'Bottom Section',
+                fontSize: 16,
+                color: AppColors.midGrey,
+                fontWeight: FontWeight.w900,
+              ),
+              Gap(1.5.h),
+              ProfileTile(
+                icon: Icons.language,
+                title: 'Language',
+                trailingText: 'English',
+              ),
+              Gap(1.2.h),
+              ProfileTile(
+                icon: Icons.attach_money,
+                title: 'Currency',
+                trailingText: '\$',
+              ),
+              Gap(3.h),
+              AppTextWidget(
+                text: 'App Info',
+                fontSize: 16,
+                color: AppColors.midGrey,
+                fontWeight: FontWeight.w900,
+              ),
+              Gap(1.5.h),
+              ProfileTile(
+                icon: Icons.privacy_tip_outlined,
+                title: 'Privacy Policy',
+              ),
+              Gap(1.2.h),
+              ProfileTile(
+                icon: Icons.verified_user_outlined,
+                title: 'Halal Guidelines',
+              ),
+              Gap(3.h),
+              AppButtonWidget(
+                onPressed: () {},
+                text: "Log Out",
+                suffixIcon: Icon(Icons.login, color: Colors.white),
+                fontSize: 20,
+                textColor: Colors.white,
+                width: 100.w,
+                fontWeight: FontWeight.w600,
+                height: 7.h,
+              ),
+              Gap(3.h),
+            ],
+          ),
         ),
       ),
     );

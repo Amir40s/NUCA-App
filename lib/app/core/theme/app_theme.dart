@@ -16,12 +16,11 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
-
-      scaffoldBackgroundColor: AppColors.white,
+      scaffoldBackgroundColor: AppColors.backgroundColor,
       fontFamily: 'Axiforma',
       appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
+        backgroundColor: AppColors.backgroundColor,
+        foregroundColor: AppColors.backgroundColor,
       ),
       textTheme: const TextTheme(
         bodyLarge: TextStyle(color: AppColors.textPrimary),

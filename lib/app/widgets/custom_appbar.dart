@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nuca/app/utils/app_colors.dart';
 import 'package:nuca/app/widgets/app_text_widget.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -15,7 +16,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.title,
     this.onBack,
     this.showBack = true,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor = AppColors.backgroundColor,
     this.titleColor = Colors.black,
     this.showShare = false,
   });
