@@ -14,6 +14,9 @@ import 'package:flutter/widgets.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/addictive_status.svg
+  String get addictiveStatus => 'assets/icons/addictive_status.svg';
+
   /// File path: assets/icons/app_icon.png
   AssetGenImage get appIcon => const AssetGenImage('assets/icons/app_icon.png');
 
@@ -23,8 +26,17 @@ class $AssetsIconsGen {
   /// File path: assets/icons/bar_chart.svg
   String get barChart => 'assets/icons/bar_chart.svg';
 
+  /// File path: assets/icons/bio.svg
+  String get bio => 'assets/icons/bio.svg';
+
   /// File path: assets/icons/camera_switch.svg
   String get cameraSwitch => 'assets/icons/camera_switch.svg';
+
+  /// File path: assets/icons/carbs.svg
+  String get carbs => 'assets/icons/carbs.svg';
+
+  /// File path: assets/icons/check.svg
+  String get check => 'assets/icons/check.svg';
 
   /// File path: assets/icons/circle.svg
   String get circle => 'assets/icons/circle.svg';
@@ -34,6 +46,15 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/crown.svg
   String get crown => 'assets/icons/crown.svg';
+
+  /// File path: assets/icons/curve.svg
+  String get curve => 'assets/icons/curve.svg';
+
+  /// File path: assets/icons/energy.svg
+  String get energy => 'assets/icons/energy.svg';
+
+  /// File path: assets/icons/gmo.svg
+  String get gmo => 'assets/icons/gmo.svg';
 
   /// File path: assets/icons/google.svg
   String get google => 'assets/icons/google.svg';
@@ -47,6 +68,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/light.svg
   String get light => 'assets/icons/light.svg';
 
+  /// File path: assets/icons/nutration_score.svg
+  String get nutrationScore => 'assets/icons/nutration_score.svg';
+
   /// File path: assets/icons/on_boarding1.svg
   String get onBoarding1 => 'assets/icons/on_boarding1.svg';
 
@@ -56,29 +80,49 @@ class $AssetsIconsGen {
   /// File path: assets/icons/person.svg
   String get person => 'assets/icons/person.svg';
 
+  /// File path: assets/icons/protiens.svg
+  String get protiens => 'assets/icons/protiens.svg';
+
   /// File path: assets/icons/qr_code.svg
   String get qrCode => 'assets/icons/qr_code.svg';
+
+  /// File path: assets/icons/salt.svg
+  String get salt => 'assets/icons/salt.svg';
+
+  /// File path: assets/icons/sugar.svg
+  String get sugar => 'assets/icons/sugar.svg';
 
   /// File path: assets/icons/tick.svg
   String get tick => 'assets/icons/tick.svg';
 
   /// List of all assets
   List<dynamic> get values => [
+    addictiveStatus,
     appIcon,
     apple,
     barChart,
+    bio,
     cameraSwitch,
+    carbs,
+    check,
     circle,
     coin,
     crown,
+    curve,
+    energy,
+    gmo,
     google,
     info,
     keyboard,
     light,
+    nutrationScore,
     onBoarding1,
     onBoarding2,
     person,
+    protiens,
     qrCode,
+    salt,
+    sugar,
     tick,
   ];
 }

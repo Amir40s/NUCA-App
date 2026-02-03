@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:nuca/app/routes/app_pages.dart';
 import 'package:nuca/app/utils/app_colors.dart';
 import 'package:nuca/app/widgets/app_text_widget.dart';
 import 'package:nuca/gen/assets.gen.dart';
@@ -147,7 +148,9 @@ class HomeCards extends StatelessWidget {
                   SizedBox(
                     width: Get.width,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed(Routes.SUBSCRIPTION);
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         padding: EdgeInsets.symmetric(vertical: 8),

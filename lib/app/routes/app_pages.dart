@@ -2,6 +2,10 @@ import 'package:get/get.dart';
 
 import '../modules/choose_language/bindings/choose_language_binding.dart';
 import '../modules/choose_language/views/choose_language_view.dart';
+import '../modules/edit_profile/bindings/edit_profile_binding.dart';
+import '../modules/edit_profile/views/edit_profile_view.dart';
+import '../modules/halal_guidlines/bindings/halal_guidlines_binding.dart';
+import '../modules/halal_guidlines/views/halal_guidlines_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -18,6 +22,10 @@ import '../modules/select_preferences/bindings/select_preferences_binding.dart';
 import '../modules/select_preferences/views/select_preferences_view.dart';
 import '../modules/signUp/bindings/sign_up_binding.dart';
 import '../modules/signUp/views/sign_up_view.dart';
+import '../modules/subscription/bindings/subscription_binding.dart';
+import '../modules/subscription/views/subscription_view.dart';
+import '../modules/subscription_managment/bindings/subscription_managment_binding.dart';
+import '../modules/subscription_managment/views/subscription_managment_view.dart';
 import '../modules/tabs/bindings/tabs_binding.dart';
 import '../modules/tabs/views/tabs_view.dart';
 
@@ -78,6 +86,26 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.SUBSCRIPTION,
+      page: () => const SubscriptionView(),
+      binding: SubscriptionBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_PROFILE,
+      page: () => const EditProfileView(),
+      binding: EditProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.SUBSCRIPTION_MANAGMENT,
+      page: () => const SubscriptionManagmentView(),
+      binding: SubscriptionManagmentBinding(),
+    ),
+    GetPage(
+      name: _Paths.HALAL_GUIDLINES,
+      page: () => const HalalGuidlinesView(),
+      binding: HalalGuidlinesBinding(),
     ),
   ];
 }

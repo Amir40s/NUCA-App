@@ -84,12 +84,18 @@ class HomeView extends GetView<HomeController> {
                   final food = controller.foods[index];
                   return Padding(
                     padding: EdgeInsets.only(bottom: 1.h),
-                    child: ScannedFoodCard(
-                      image: food['image'] as String,
-                      title: food['title'] as String,
-                      time: food['time'] as String,
-                      price: food['price'] as String,
-                      isHalal: food['isHalal'] as bool,
+                    child: GestureDetector(
+                      onTap: () => Get.toNamed(
+                        Routes.PRODUCT_DETAIL,
+                        arguments: {"code": "1223"},
+                      ),
+                      child: ScannedFoodCard(
+                        image: food['image'] as String,
+                        title: food['title'] as String,
+                        time: food['time'] as String,
+                        price: food['price'] as String,
+                        isHalal: food['isHalal'] as bool,
+                      ),
                     ),
                   );
                 },
