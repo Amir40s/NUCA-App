@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:gap/gap.dart';
+import 'package:nuca/app/routes/app_pages.dart';
 import 'package:nuca/app/utils/export.dart';
 import 'package:nuca/app/widgets/app_text_widget.dart';
 import 'package:nuca/app/widgets/custom_button.dart';
+import 'package:nuca/app/widgets/social_buttons.dart';
 import 'package:nuca/gen/assets.gen.dart';
 import 'package:sizer/sizer.dart';
 
@@ -160,24 +161,24 @@ class _SignUpViewState extends State<SignUpView> {
                     fontWeight: FontWeight.w600,
                     height: 7.h,
                   ),
-                  Gap(2.h),
+                  Gap(3.h),
                   Center(
                     child: AppTextWidget(
-                      text: 'Or Log In with',
+                      text: 'Or Sign up with',
                       fontWeight: FontWeight.w600,
                       fontSize: 17,
                     ),
                   ),
-                  Gap(2.h),
+                  Gap(4.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      socialIcon(asset: Assets.icons.google, onTap: () {}),
+                      SocialButton(asset: Assets.icons.google, onTap: () {}),
                       Gap(6.w),
-                      socialIcon(asset: Assets.icons.apple, onTap: () {}),
+                      SocialButton(asset: Assets.icons.apple, onTap: () {}),
                     ],
                   ),
-                  Gap(3.h),
+                  Gap(4.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -187,9 +188,11 @@ class _SignUpViewState extends State<SignUpView> {
                           minimumSize: const Size(0, 0),
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(Routes.LOGIN);
+                        },
                         child: const AppTextWidget(
-                          text: "Don't have an account? ",
+                          text: "Already have an account? ",
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ),
@@ -201,7 +204,9 @@ class _SignUpViewState extends State<SignUpView> {
                           minimumSize: const Size(0, 0),
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(Routes.LOGIN);
+                        },
                         child: const AppTextWidget(
                           text: "Login",
                           color: AppColors.secondary,
@@ -217,30 +222,6 @@ class _SignUpViewState extends State<SignUpView> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget socialIcon({required String asset, required VoidCallback onTap}) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(50),
-      child: Container(
-        height: 6.h,
-        width: 6.h,
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: AppColors.primary,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withAlpha(30),
-              blurRadius: 8,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: SvgPicture.asset(asset, fit: BoxFit.contain),
       ),
     );
   }

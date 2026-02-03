@@ -9,6 +9,10 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const LOGIN = _Paths.LOGIN;
   static const SIGN_UP = _Paths.SIGN_UP;
+  static const TABS = _Paths.TABS;
+  static const SCAN_QR = _Paths.SCAN_QR;
+  static const PRODUCT_DETAIL = _Paths.PRODUCT_DETAIL;
+  static const PROFILE = _Paths.PROFILE;
 }
 
 abstract class _Paths {
@@ -19,4 +23,8 @@ abstract class _Paths {
   static const HOME = '/home';
   static const LOGIN = '/login';
   static const SIGN_UP = '/sign-up';
+  static const TABS = '/tabs';
+  static const SCAN_QR = '/scan-qr';
+  static const PRODUCT_DETAIL = '/product-detail';
+  static const PROFILE = '/profile';
 }

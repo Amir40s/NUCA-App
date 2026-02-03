@@ -16,6 +16,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
+
       scaffoldBackgroundColor: AppColors.white,
       fontFamily: 'Axiforma',
       appBarTheme: const AppBarTheme(
@@ -34,6 +35,7 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         fillColor: AppColors.primary,
         filled: true,
+
         contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
         hintStyle: TextStyle(
           fontSize: 14,
@@ -48,11 +50,11 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: AppColors.primary),
+          borderSide: BorderSide(color: AppColors.secondary),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Colors.grey),
+          borderSide: BorderSide(color: Colors.black),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
@@ -62,6 +64,11 @@ class AppTheme {
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(color: Colors.red),
         ),
+      ),
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: AppColors.secondary,
+        selectionColor: AppColors.secondary.withAlpha(75),
+        selectionHandleColor: AppColors.secondary,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(

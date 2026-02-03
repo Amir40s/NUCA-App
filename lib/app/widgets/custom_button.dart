@@ -110,7 +110,7 @@ class AppButtonWidget extends StatelessWidget {
                             text: text,
                             fontSize: fontSize ?? 16,
                             fontWeight: fontWeight,
-                            color: textColor ?? AppColors.primaryLight,
+                            color: textColor ?? AppColors.primaryMidLight,
 
                             overflow: TextOverflow.ellipsis,
                           ),
