@@ -94,6 +94,7 @@ class ProfileView extends GetView<ProfileController> {
                 icon: Icons.star_border,
                 image: Assets.icons.subscriptionStatus,
                 title: 'Subscription Status',
+                onTap: () => Get.toNamed(Routes.SUBSCRIPTION_MANAGMENT),
               ),
               Gap(3.h),
               AppTextWidget(
@@ -134,6 +135,7 @@ class ProfileView extends GetView<ProfileController> {
               ProfileTile(
                 icon: Icons.verified_user_outlined,
                 title: 'Halal Guidelines',
+                onTap: () => Get.toNamed(Routes.HALAL_GUIDLINES),
                 image: Assets.icons.halalIcon,
               ),
               Gap(3.h),

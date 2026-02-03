@@ -17,6 +17,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/addictive_status.svg
   String get addictiveStatus => 'assets/icons/addictive_status.svg';
 
+  /// File path: assets/icons/alchole.svg
+  String get alchole => 'assets/icons/alchole.svg';
+
   /// File path: assets/icons/app_icon.png
   AssetGenImage get appIcon => const AssetGenImage('assets/icons/app_icon.png');
 
@@ -52,6 +55,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/curve.svg
   String get curve => 'assets/icons/curve.svg';
+
+  /// File path: assets/icons/database.svg
+  String get database => 'assets/icons/database.svg';
 
   /// File path: assets/icons/energy.svg
   String get energy => 'assets/icons/energy.svg';
@@ -98,6 +104,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/salt.svg
   String get salt => 'assets/icons/salt.svg';
 
+  /// File path: assets/icons/scan_icon.svg
+  String get scanIcon => 'assets/icons/scan_icon.svg';
+
   /// File path: assets/icons/subscription_status.svg
   String get subscriptionStatus => 'assets/icons/subscription_status.svg';
 
@@ -107,9 +116,13 @@ class $AssetsIconsGen {
   /// File path: assets/icons/tick.svg
   String get tick => 'assets/icons/tick.svg';
 
+  /// File path: assets/icons/varification.svg
+  String get varification => 'assets/icons/varification.svg';
+
   /// List of all assets
   List<dynamic> get values => [
     addictiveStatus,
+    alchole,
     appIcon,
     apple,
     barChart,
@@ -122,6 +135,7 @@ class $AssetsIconsGen {
     coin,
     crown,
     curve,
+    database,
     energy,
     gmo,
     google,
@@ -137,9 +151,11 @@ class $AssetsIconsGen {
     protiens,
     qrCode,
     salt,
+    scanIcon,
     subscriptionStatus,
     sugar,
     tick,
+    varification,
   ];
 }
 
@@ -152,8 +168,12 @@ class $AssetsImagesGen {
   /// File path: assets/images/food2.png
   AssetGenImage get food2 => const AssetGenImage('assets/images/food2.png');
 
+  /// File path: assets/images/hala_image.png
+  AssetGenImage get halaImage =>
+      const AssetGenImage('assets/images/hala_image.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [food1, food2];
+  List<AssetGenImage> get values => [food1, food2, halaImage];
 }
 
 class Assets {
