@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:nuca/app/routes/app_pages.dart';
 import 'package:nuca/app/utils/app_colors.dart';
 import 'package:nuca/app/widgets/app_text_widget.dart';
 import 'package:nuca/gen/assets.gen.dart';
@@ -119,7 +120,7 @@ class BottomNavBar extends GetView<TabsController> {
               Positioned(
                 top: -1.2.h,
                 child: GestureDetector(
-                  onTap: () => controller.changeTab(1),
+                  onTap: () => Get.toNamed(Routes.SCAN_QR),
                   child: Container(
                     width: 8.5.h,
                     height: 8.5.h,

@@ -23,6 +23,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/bar_chart.svg
   String get barChart => 'assets/icons/bar_chart.svg';
 
+  /// File path: assets/icons/camera_switch.svg
+  String get cameraSwitch => 'assets/icons/camera_switch.svg';
+
   /// File path: assets/icons/circle.svg
   String get circle => 'assets/icons/circle.svg';
 
@@ -37,6 +40,12 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/info.svg
   String get info => 'assets/icons/info.svg';
+
+  /// File path: assets/icons/keyboard.svg
+  String get keyboard => 'assets/icons/keyboard.svg';
+
+  /// File path: assets/icons/light.svg
+  String get light => 'assets/icons/light.svg';
 
   /// File path: assets/icons/on_boarding1.svg
   String get onBoarding1 => 'assets/icons/on_boarding1.svg';
@@ -58,11 +67,14 @@ class $AssetsIconsGen {
     appIcon,
     apple,
     barChart,
+    cameraSwitch,
     circle,
     coin,
     crown,
     google,
     info,
+    keyboard,
+    light,
     onBoarding1,
     onBoarding2,
     person,
