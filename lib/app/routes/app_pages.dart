@@ -26,7 +26,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.CHOOSE_LANGUAGE;
+  static const INITIAL = Routes.TABS;
 
   static final routes = [
     GetPage(

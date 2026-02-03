@@ -47,6 +47,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/person.svg
   String get person => 'assets/icons/person.svg';
 
+  /// File path: assets/icons/qr_code.svg
+  String get qrCode => 'assets/icons/qr_code.svg';
+
   /// File path: assets/icons/tick.svg
   String get tick => 'assets/icons/tick.svg';
 
@@ -63,6 +66,7 @@ class $AssetsIconsGen {
     onBoarding1,
     onBoarding2,
     person,
+    qrCode,
     tick,
   ];
 }

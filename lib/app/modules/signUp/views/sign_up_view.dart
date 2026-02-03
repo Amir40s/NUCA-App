@@ -153,7 +153,9 @@ class _SignUpViewState extends State<SignUpView> {
                   Gap(4.h),
                   AppButtonWidget(
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {}
+                      if (_formKey.currentState!.validate()) {
+                        Get.offAllNamed(Routes.TABS);
+                      }
                     },
                     text: "Register",
                     fontSize: 20,

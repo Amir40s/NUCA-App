@@ -714,6 +714,7 @@ class IconSnackBar {
       content: SnackBarWidget(
         onPressed: () => ScaffoldMessenger.of(context).removeCurrentSnackBar(),
         label: label,
+
         backgroundColor: backgroundColor ?? _getBackgroundColor(snackBarType),
         labelTextStyle: labelTextStyle,
         iconType: _getIconType(snackBarType),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
+import 'package:nuca/app/routes/app_pages.dart';
 import 'package:nuca/app/utils/app_colors.dart';
 import 'package:nuca/app/utils/app_utils.dart';
 import 'package:nuca/app/widgets/app_text_widget.dart';
@@ -126,7 +127,9 @@ class _LoginViewState extends State<LoginView> {
                   Gap(4.h),
                   AppButtonWidget(
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {}
+                      if (_formKey.currentState!.validate()) {
+                        Get.offAllNamed(Routes.TABS);
+                      }
                     },
                     text: "Log In",
                     fontSize: 20,
