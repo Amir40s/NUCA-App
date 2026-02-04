@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
+import 'package:nuca/app/routes/app_pages.dart';
 
 class SplashController extends GetxController {
-  //TODO: Implement SplashController
-
-  final count = 0.obs;
   @override
   void onInit() {
+    Future.delayed(const Duration(seconds: 2), () {
+      Get.offAllNamed(Routes.CHOOSE_LANGUAGE);
+    });
     super.onInit();
   }
 
@@ -18,6 +19,4 @@ class SplashController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

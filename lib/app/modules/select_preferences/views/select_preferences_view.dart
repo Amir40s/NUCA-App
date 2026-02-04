@@ -132,7 +132,6 @@ class SelectPreferencesView extends GetView<SelectPreferencesController> {
                     } else {
                       AppUtils.showMessage(
                         isError: true,
-
                         "Please select both country and currency.",
                         context: context,
                       );
