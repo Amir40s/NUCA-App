@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nuca/utils/app_colors.dart';
 import 'package:nuca/widgets/app_text_widget.dart';
+import 'package:sizer/sizer.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -31,13 +32,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: showBack
           ? IconButton(
               onPressed: () => Get.back(),
-              icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
+              icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 3.h),
             )
           : null,
       title: AppTextWidget(
         text: title,
         color: titleColor,
-        fontSize: 17,
+        fontSize: 18,
         fontWeight: FontWeight.bold,
         textAlign: TextAlign.center,
       ),
@@ -45,7 +46,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         if (showShare == true)
           IconButton(
             onPressed: () => Get.back(),
-            icon: Icon(Icons.share, color: Colors.black, size: 20),
+            icon: Icon(Icons.share, color: Colors.black, size: 3.h),
           ),
       ],
     );

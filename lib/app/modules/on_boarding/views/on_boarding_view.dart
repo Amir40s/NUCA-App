@@ -106,7 +106,9 @@ class OnBoardingView extends GetView<OnBoardingController> {
                               minimumSize: const Size(0, 0),
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.toNamed(Routes.LOGIN);
+                            },
                             child: const AppTextWidget(
                               text: "Don't have an account? ",
                               fontSize: 16,
@@ -120,7 +122,9 @@ class OnBoardingView extends GetView<OnBoardingController> {
                               minimumSize: const Size(0, 0),
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.toNamed(Routes.LOGIN);
+                            },
                             child: const AppTextWidget(
                               text: "Login",
                               color: AppColors.secondary,

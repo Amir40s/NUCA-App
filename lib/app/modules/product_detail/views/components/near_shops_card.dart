@@ -42,6 +42,7 @@ class NearShopsCard extends StatelessWidget {
                   ),
                 ],
               ),
+              Gap(1.h),
               Row(
                 children: [
                   SvgPicture.asset(

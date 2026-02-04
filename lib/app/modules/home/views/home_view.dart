@@ -52,7 +52,6 @@ class HomeView extends GetView<HomeController> {
                   hintText: 'Search by product name, SKU, or model number',
                 ),
               ),
-
               Gap(2.5.h),
               HomeCards(),
               Gap(3.h),
@@ -148,7 +147,9 @@ class HomeView extends GetView<HomeController> {
                       minimumSize: const Size(0, 0),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed(Routes.LOGIN);
+                    },
                     child: const AppTextWidget(
                       text: "Already have an account? ",
                       fontSize: 16,
@@ -162,7 +163,9 @@ class HomeView extends GetView<HomeController> {
                       minimumSize: const Size(0, 0),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed(Routes.LOGIN);
+                    },
                     child: const AppTextWidget(
                       text: "Sign In",
                       color: AppColors.secondary,

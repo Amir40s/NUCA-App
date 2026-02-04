@@ -18,7 +18,7 @@ class SubscriptionView extends GetView<SubscriptionController> {
     return Scaffold(
       backgroundColor: AppColors.primary,
       appBar: AppBar(
-        backgroundColor: AppColors.backgroundColor,
+        backgroundColor: AppColors.primary,
         leading: IconButton(
           onPressed: () => Get.back(),
           padding: EdgeInsets.zero,

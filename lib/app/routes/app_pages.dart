@@ -22,6 +22,8 @@ import '../modules/select_preferences/bindings/select_preferences_binding.dart';
 import '../modules/select_preferences/views/select_preferences_view.dart';
 import '../modules/signUp/bindings/sign_up_binding.dart';
 import '../modules/signUp/views/sign_up_view.dart';
+import '../modules/splash/bindings/splash_binding.dart';
+import '../modules/splash/views/splash_view.dart';
 import '../modules/subscription/bindings/subscription_binding.dart';
 import '../modules/subscription/views/subscription_view.dart';
 import '../modules/subscription_managment/bindings/subscription_managment_binding.dart';
@@ -34,7 +36,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.TABS;
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(
@@ -106,6 +108,11 @@ class AppPages {
       name: _Paths.HALAL_GUIDLINES,
       page: () => const HalalGuidlinesView(),
       binding: HalalGuidlinesBinding(),
+    ),
+    GetPage(
+      name: _Paths.SPLASH,
+      page: () => const SplashView(),
+      binding: SplashBinding(),
     ),
   ];
 }

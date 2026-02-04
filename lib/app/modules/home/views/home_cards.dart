@@ -34,6 +34,7 @@ class HomeCards extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         padding: EdgeInsets.all(2.w),
@@ -43,7 +44,6 @@ class HomeCards extends StatelessWidget {
                         ),
                         child: SvgPicture.asset(Assets.icons.barChart),
                       ),
-                      Gap(9.5.w),
                       AppTextWidget(
                         text: 'Monthly',
                         fontSize: 16,
@@ -75,11 +75,10 @@ class HomeCards extends StatelessWidget {
                       ],
                     ),
                   ),
-
                   Gap(1.h),
                   AppTextWidget(
                     text: 'Scan Left',
-                    fontSize: 16.sp,
+                    fontSize: 16,
                     color: AppColors.midGrey,
                   ),
                   Gap(1.h),
@@ -133,14 +132,14 @@ class HomeCards extends StatelessWidget {
                   Gap(1.5.h),
                   AppTextWidget(
                     text: 'Go Premium',
-                    fontSize: 17.sp,
+                    fontSize: 17,
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
                   ),
                   Gap(0.5.h),
                   AppTextWidget(
                     text: 'Unlimited scans & deals',
-                    fontSize: 15.sp,
+                    fontSize: 15,
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
                   ),
@@ -160,7 +159,7 @@ class HomeCards extends StatelessWidget {
                       ),
                       child: AppTextWidget(
                         text: 'Upgrade',
-                        fontSize: 16.5.sp,
+                        fontSize: 16.5,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

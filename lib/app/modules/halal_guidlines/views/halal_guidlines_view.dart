@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
+import 'package:nuca/app/routes/app_pages.dart';
 import 'package:nuca/utils/app_colors.dart';
 import 'package:nuca/utils/app_utils.dart';
 import 'package:nuca/widgets/app_text_widget.dart';
@@ -96,7 +97,9 @@ class HalalGuidlinesView extends GetView<HalalGuidlinesController> {
                   ),
                   Gap(3.h),
                   AppButtonWidget(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed(Routes.SCAN_QR);
+                    },
                     text: 'Start Scanning',
                     prefixIcon: SvgPicture.asset(Assets.icons.scanIcon),
                     fontSize: 20,
