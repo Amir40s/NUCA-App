@@ -6,9 +6,9 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:nuca/app/modules/select_preferences/views/components/picker_tile.dart';
 import 'package:nuca/app/routes/app_pages.dart';
-import 'package:nuca/app/utils/app_utils.dart';
-import 'package:nuca/app/widgets/app_text_widget.dart';
-import 'package:nuca/app/widgets/custom_button.dart';
+import 'package:nuca/utils/app_utils.dart';
+import 'package:nuca/widgets/app_text_widget.dart';
+import 'package:nuca/widgets/custom_button.dart';
 import 'package:nuca/gen/assets.gen.dart';
 import 'package:sizer/sizer.dart';
 

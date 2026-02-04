@@ -3,11 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
-import 'package:nuca/app/utils/app_colors.dart';
-import 'package:nuca/app/utils/app_utils.dart';
-import 'package:nuca/app/widgets/app_text_widget.dart';
-import 'package:nuca/app/widgets/custom_appbar.dart';
-import 'package:nuca/app/widgets/custom_button.dart';
+import 'package:nuca/utils/app_colors.dart';
+import 'package:nuca/utils/app_utils.dart';
+import 'package:nuca/widgets/app_text_widget.dart';
+import 'package:nuca/widgets/custom_appbar.dart';
+import 'package:nuca/widgets/custom_button.dart';
 import 'package:nuca/gen/assets.gen.dart';
 import 'package:sizer/sizer.dart';
 

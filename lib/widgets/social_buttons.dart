@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nuca/app/utils/app_colors.dart';
+import 'package:nuca/utils/app_colors.dart';
 import 'package:sizer/sizer.dart';
 
 class SocialButton extends StatelessWidget {

@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:nuca/app/modules/home/views/components/scanned_food_card.dart';
 import 'package:nuca/app/modules/home/views/home_cards.dart';
 import 'package:nuca/app/routes/app_pages.dart';
-import 'package:nuca/app/utils/app_colors.dart';
-import 'package:nuca/app/widgets/app_text_widget.dart';
-import 'package:nuca/app/widgets/custom_button.dart';
+import 'package:nuca/utils/app_colors.dart';
+import 'package:nuca/widgets/app_text_widget.dart';
+import 'package:nuca/widgets/custom_button.dart';
 import 'package:sizer/sizer.dart';
 import '../controllers/home_controller.dart';
 

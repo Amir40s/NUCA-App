@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
-import 'package:nuca/app/widgets/app_text_widget.dart';
+import 'package:nuca/widgets/app_text_widget.dart';
 import 'package:sizer/sizer.dart';
 
 class ProfileTile extends StatelessWidget {

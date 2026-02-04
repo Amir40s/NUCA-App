@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:nuca/app/routes/app_pages.dart';
-import 'package:nuca/app/widgets/custom_button.dart';
+import 'package:nuca/widgets/custom_button.dart';
 import '/app/modules/choose_language/views/components/language_tile.dart';
-import '/app/utils/app_utils.dart';
-import '/app/widgets/app_text_widget.dart';
+import '../../../../utils/app_utils.dart';
+import '../../../../widgets/app_text_widget.dart';
 import 'package:sizer/sizer.dart';
 import '../controllers/choose_language_controller.dart';
 
@@ -88,7 +88,7 @@ class ChooseLanguageView extends GetView<ChooseLanguageController> {
                 fontWeight: FontWeight.w600,
                 height: 7.h,
               ),
-              Gap(1.h),
+              Gap(3.h),
             ],
           ),
         ),

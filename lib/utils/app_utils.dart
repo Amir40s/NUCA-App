@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 import 'package:flutter/material.dart';
-import 'package:nuca/app/widgets/custom_snackbar.dart';
+import 'package:nuca/widgets/custom_snackbar.dart';
 
 class AppUtils {
   static bool _isSnackbarActive = false;

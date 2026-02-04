@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:nuca/app/utils/app_utils.dart';
+import 'package:nuca/utils/app_utils.dart';
 
 enum SnackBarType { success, fail, alert }
 
