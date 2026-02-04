@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:nuca/app/modules/select_preferences/views/components/picker_tile.dart';
-import 'package:nuca/app/routes/app_pages.dart';
 import 'package:nuca/utils/app_utils.dart';
 import 'package:nuca/widgets/app_text_widget.dart';
 import 'package:nuca/widgets/custom_button.dart';
@@ -128,7 +127,7 @@ class SelectPreferencesView extends GetView<SelectPreferencesController> {
                 return AppButtonWidget(
                   onPressed: () {
                     if (isValid) {
-                      Get.toNamed(Routes.ON_BOARDING);
+                      controller.savePreferences(context);
                     } else {
                       AppUtils.showMessage(
                         isError: true,

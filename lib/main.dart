@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:nuca/core/theme/app_theme.dart';
 import 'package:nuca/app/routes/app_pages.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, screenType) {
         return GetMaterialApp(
           title: 'Nuca',
+          builder: EasyLoading.init(),
           debugShowCheckedModeBanner: false,
           theme: AppTheme.light,
           initialRoute: AppPages.INITIAL,

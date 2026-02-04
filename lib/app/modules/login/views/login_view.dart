@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-
 import 'package:get/get.dart';
-import 'package:nuca/app/routes/app_pages.dart';
-import 'package:nuca/utils/app_colors.dart';
-import 'package:nuca/utils/app_utils.dart';
-import 'package:nuca/widgets/app_text_widget.dart';
-import 'package:nuca/widgets/custom_button.dart';
-import 'package:nuca/widgets/social_buttons.dart';
-import 'package:nuca/gen/assets.gen.dart';
+import '/app/routes/app_pages.dart';
+import '/utils/app_colors.dart';
+import '/utils/app_utils.dart';
+import '/widgets/app_text_widget.dart';
+import '/widgets/custom_button.dart';
+import '/widgets/social_buttons.dart';
+import '/gen/assets.gen.dart';
 import 'package:sizer/sizer.dart';
-
 import '../controllers/login_controller.dart';
 
 class LoginView extends StatefulWidget {
@@ -128,7 +126,7 @@ class _LoginViewState extends State<LoginView> {
                   AppButtonWidget(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        Get.offAllNamed(Routes.TABS);
+                        controller.login(context);
                       }
                     },
                     text: "Log In",

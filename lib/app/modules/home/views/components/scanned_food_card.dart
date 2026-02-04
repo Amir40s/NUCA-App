@@ -9,7 +9,7 @@ class ScannedFoodCard extends StatelessWidget {
   final String title;
   final String time;
   final String price;
-  final bool isHalal;
+  final String isHalal;
 
   const ScannedFoodCard({
     super.key,
@@ -22,13 +22,13 @@ class ScannedFoodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color bgColor = isHalal
+    final Color bgColor = isHalal == "halal"
         ? const Color(0xFFB7E3BC)
         : const Color(0xFFFFD6CC);
-    final Color badgeColor = isHalal
+    final Color badgeColor = isHalal == "halal"
         ? const Color(0xFF7ED49A)
         : const Color(0xFFFFA59A);
-    final Color iconColor = isHalal
+    final Color iconColor = isHalal == "halal"
         ? const Color(0xFF0E7A3B)
         : const Color(0xFFD32F2F);
 
@@ -42,13 +42,26 @@ class ScannedFoodCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(14),
-            child: Image.asset(
+            child: Image.network(
               image,
               width: 16.w,
               height: 16.w,
               fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  width: 16.w,
+                  height: 16.w,
+                  color: Colors.grey.shade300,
+                  child: const Icon(
+                    Icons.broken_image,
+                    color: Colors.grey,
+                    size: 24,
+                  ),
+                );
+              },
             ),
           ),
+
           Gap(4.w),
           Expanded(
             child: Column(
@@ -86,13 +99,13 @@ class ScannedFoodCard extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(
-                    isHalal ? Icons.check_circle : Icons.cancel,
+                    isHalal == "halal" ? Icons.check_circle : Icons.cancel,
                     color: iconColor,
                     size: 14,
                   ),
                   Gap(1.w),
                   AppTextWidget(
-                    text: isHalal ? 'Halal' : 'Haram',
+                    text: isHalal == "halal" ? 'Halal' : 'Haram',
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,

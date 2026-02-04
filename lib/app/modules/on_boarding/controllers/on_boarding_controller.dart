@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nuca/app/routes/app_pages.dart';
+import 'package:nuca/services/shared_preferences_service.dart';
 
 class OnBoardingController extends GetxController {
   final PageController pageController = PageController();
@@ -14,13 +15,14 @@ class OnBoardingController extends GetxController {
     currentIndex.value = index;
   }
 
-  void nextPage() {
+  void nextPage() async {
     if (currentIndex.value < 1) {
       pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     } else {
+      await OnboardingPreferences.setOnboardingSeen();
       Get.offAllNamed(Routes.HOME, arguments: {"showBottomSheet": true});
     }
   }

@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:nuca/app/routes/app_pages.dart';
 import 'package:nuca/services/app_log_service.dart';
 import 'package:nuca/services/shared_preferences_service.dart';
 import 'package:nuca/utils/app_constants.dart';
@@ -15,158 +18,167 @@ class AuthApiClient {
           baseUrl: AppConstants.apiBaseUrl,
           connectTimeout: const Duration(seconds: 40),
           receiveTimeout: const Duration(seconds: 50),
+          responseType: ResponseType.json,
         ),
       ) {
     _dio.interceptors.add(_AuthApiTokenInterceptor());
+    _dio.interceptors.add(ApiLoggingInterceptor());
   }
 
-  /// Handle API Errors
+  Options _mergeHeaders([Map<String, String>? headers]) {
+    final defaultHeaders = {
+      'Content-Type': Headers.jsonContentType,
+      'Accept': 'application/json',
+    };
+    if (headers != null) defaultHeaders.addAll(headers);
+    return Options(headers: defaultHeaders);
+  }
+
   Failure _handleError(DioException error) {
     if (error.response != null) {
-      log('error response is ======> ${error.response}');
-      final responseData = error.response?.data;
+      final status = error.response?.statusCode ?? 0;
+      final data = error.response?.data;
+      log('API Error Status: $status | Response: $data');
 
-      if (responseData is Map<String, dynamic> &&
-          responseData.containsKey('message')) {
-        LogService.warning(responseData['message']);
-        return Failure(responseData['message']);
+      if (data is Map<String, dynamic> && data.containsKey('message')) {
+        LogService.warning(data['message']);
+        return Failure(data['message'], statusCode: status);
+      } else if (data is String) {
+        return Failure(data, statusCode: status);
+      } else {
+        return Failure(
+          "Server error with status code $status",
+          statusCode: status,
+        );
       }
-      // If responseData is not a Map, try extracting error text
-      else if (responseData is String) {
-        return Failure(responseData);
-      }
-
-      return Failure("An unknown server error occurred.");
-    } else if (error.type == DioExceptionType.connectionTimeout) {
-      return Failure("Connection Timeout. Please try again.");
-    } else if (error.type == DioExceptionType.receiveTimeout) {
-      return Failure("Receive Timeout. Please try again.");
-    } else if (error.type == DioExceptionType.badResponse) {
-      return Failure("Bad Response. Something went wrong.");
     } else {
-      return Failure("Unexpected error. Please try again.");
+      switch (error.type) {
+        case DioExceptionType.connectionTimeout:
+          return Failure("Connection Timeout");
+        case DioExceptionType.receiveTimeout:
+          return Failure("Receive Timeout");
+        case DioExceptionType.badResponse:
+          return Failure("Bad Response from server");
+        default:
+          return Failure("Unexpected error occurred");
+      }
     }
   }
 
   Future<ApiResult<dynamic>> get(
     String endpoint, {
     Map<String, dynamic>? queryParams,
-    Map<String, dynamic>? headers,
+    Map<String, String>? headers,
   }) async {
     try {
-      final options = headers != null ? Options(headers: headers) : null;
-      Response response = await _dio.get(
+      final response = await _dio.get(
         endpoint,
         queryParameters: queryParams,
-        options: options,
+        options: _mergeHeaders(headers),
       );
-      log('get status ======> ${response.data['status']}');
-      LogService.info("✅ Response: \n $endpoint ${response.data}");
 
-      return Success(response.data);
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        LogService.info("GET $endpoint Success: ${response.data}");
+        return Success(response.data);
+      } else {
+        return Failure(
+          "GET $endpoint failed with status ${response.statusCode}",
+          statusCode: response.statusCode,
+        );
+      }
     } on DioException catch (e) {
       return _handleError(e);
     }
   }
 
-  /// **POST Request**
   Future<ApiResult<dynamic>> post(
     String endpoint,
     dynamic data, {
-    Map<String, dynamic>? files,
-  }) async {
-    try {
-      dynamic requestData;
-      Options options = Options();
-      requestData = jsonEncode(data);
-      options.contentType = Headers.jsonContentType;
-      Response response = await _dio.post(
-        endpoint,
-        data: requestData,
-        options: options,
-      );
-      LogService.info("✅ Response: \n $endpoint ${response.data}");
-
-      return Success(response.data);
-    } on DioException catch (e) {
-      LogService.error("❌ API Error: $endpoint", e, e.stackTrace);
-      return _handleError(e);
-    }
-  }
-
-  Future<ApiResult<dynamic>> postResendOtp(
-    String endpoint,
-    dynamic data, {
-    Map<String, dynamic>? files,
+    Map<String, String>? headers,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      dynamic requestData = jsonEncode(data);
-
-      Options options = Options(contentType: Headers.jsonContentType);
-
-      Response response = await _dio.post(
+      final response = await _dio.post(
         endpoint,
-        data: requestData,
+        data: jsonEncode(data),
         queryParameters: queryParameters,
-        options: options,
+        options: _mergeHeaders(headers),
       );
 
-      LogService.info("✅ Response: \n $endpoint ${response.data}");
-
-      return Success(response.data);
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        LogService.info("POST $endpoint Success: ${response.data}");
+        return Success(response.data);
+      } else {
+        return Failure(
+          "POST $endpoint failed with status ${response.statusCode}",
+          statusCode: response.statusCode,
+        );
+      }
     } on DioException catch (e) {
-      LogService.error("❌ API Error: $endpoint", e, e.stackTrace);
       return _handleError(e);
     }
   }
 
-  /// **PUT Request**
   Future<ApiResult<dynamic>> put(
     String endpoint,
     dynamic data, {
     Map<String, dynamic>? queryParams,
+    Map<String, String>? headers,
   }) async {
     try {
-      final requestData = jsonEncode(data);
-      final options = Options(contentType: Headers.jsonContentType);
-
-      Response response = await _dio.put(
+      final response = await _dio.put(
         endpoint,
-        data: requestData,
+        data: jsonEncode(data),
         queryParameters: queryParams,
-        options: options,
+        options: _mergeHeaders(headers),
       );
 
-      LogService.info("✅ PUT Response: \n $endpoint ${response.data}");
-      return Success(response.data);
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        LogService.info("PUT $endpoint Success: ${response.data}");
+        return Success(response.data);
+      } else {
+        return Failure(
+          "PUT $endpoint failed with status ${response.statusCode}",
+          statusCode: response.statusCode,
+        );
+      }
     } on DioException catch (e) {
-      LogService.error("❌ PUT API Error: $endpoint", e, e.stackTrace);
       return _handleError(e);
     }
   }
 
-  /// **DELETE Request**
   Future<ApiResult<dynamic>> delete(
     String endpoint, {
-    Map<String, dynamic>? queryParams,
     dynamic data,
+    Map<String, dynamic>? queryParams,
+    Map<String, String>? headers,
   }) async {
     try {
-      final requestData = data != null ? jsonEncode(data) : null;
-      final options = Options(contentType: Headers.jsonContentType);
-
-      Response response = await _dio.delete(
+      final response = await _dio.delete(
         endpoint,
-        data: requestData,
+        data: data != null ? jsonEncode(data) : null,
         queryParameters: queryParams,
-        options: options,
+        options: _mergeHeaders(headers),
       );
 
-      LogService.info("✅ DELETE Response: \n $endpoint ${response.data}");
-      return Success(response.data);
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        LogService.info("DELETE $endpoint Success: ${response.data}");
+        return Success(response.data);
+      } else {
+        return Failure(
+          "DELETE $endpoint failed with status ${response.statusCode}",
+          statusCode: response.statusCode,
+        );
+      }
     } on DioException catch (e) {
-      LogService.error("❌ DELETE API Error: $endpoint", e, e.stackTrace);
       return _handleError(e);
     }
   }
@@ -182,6 +194,50 @@ class _AuthApiTokenInterceptor extends Interceptor {
     if (token != null && token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
     }
-    return handler.next(options);
+    handler.next(options);
+  }
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    if (err.response?.statusCode == 401) {
+      SharedPreferencesService.clear();
+      Get.offAllNamed(Routes.LOGIN);
+    }
+
+    handler.next(err);
+  }
+}
+
+class ApiLoggingInterceptor extends Interceptor {
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    log('➡️ REQUEST');
+    log('METHOD: ${options.method}');
+    log('URL: ${options.baseUrl}${options.path}');
+    log('HEADERS: ${options.headers}');
+    log('QUERY PARAMS: ${options.queryParameters}');
+    log('BODY: ${options.data}');
+    handler.next(options);
+  }
+
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    log('✅ RESPONSE');
+    log('STATUS: ${response.statusCode}');
+    log(
+      'URL: ${response.requestOptions.baseUrl}${response.requestOptions.path}',
+    );
+    log('RESPONSE DATA: ${response.data}');
+    handler.next(response);
+  }
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    log('❌ ERROR');
+    log('METHOD: ${err.requestOptions.method}');
+    log('URL: ${err.requestOptions.baseUrl}${err.requestOptions.path}');
+    log('STATUS: ${err.response?.statusCode}');
+    log('ERROR DATA: ${err.response?.data}');
+    handler.next(err);
   }
 }

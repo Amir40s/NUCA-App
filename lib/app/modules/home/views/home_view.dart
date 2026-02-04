@@ -17,89 +17,135 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppTextWidget(
-                text: 'Hello 👋',
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-              ),
-              Gap(1.h),
-              AppTextWidget(
-                text: 'Eat with Confidence',
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: AppColors.midGrey,
-              ),
-              Gap(2.h),
-              TextFormField(
-                readOnly: true,
-                textInputAction: TextInputAction.search,
-                onTap: () {},
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide(color: AppColors.lightGrey),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide(color: AppColors.lightGrey),
-                  ),
-                  prefixIcon: const Icon(Icons.search),
-                  hintText: 'Search by product name, SKU, or model number',
+        child: RefreshIndicator(
+          onRefresh: () async {
+            await controller.getScans();
+          },
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppTextWidget(
+                  text: 'Hello 👋',
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
                 ),
-              ),
-              Gap(2.5.h),
-              HomeCards(),
-              Gap(3.h),
-              Row(
-                children: [
-                  Expanded(
-                    child: AppTextWidget(
-                      text: "Recent Scans",
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                Gap(1.h),
+                AppTextWidget(
+                  text: 'Eat with Confidence',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.midGrey,
+                ),
+                Gap(2.h),
+                TextFormField(
+                  readOnly: true,
+                  textInputAction: TextInputAction.search,
+                  onTap: () {},
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide(color: AppColors.lightGrey),
                     ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide(color: AppColors.lightGrey),
+                    ),
+                    prefixIcon: const Icon(Icons.search),
+                    hintText: 'Search by product name, SKU, or model number',
                   ),
-                  TextButton(
-                    onPressed: () {},
-                    child: AppTextWidget(
-                      text: "See all",
-                      fontSize: 18,
-                      color: AppColors.secondary,
-                      fontWeight: FontWeight.w600,
-                    ),
+                ),
+                Gap(2.5.h),
+                if (controller.showBottomSheet.value == true)
+                  AppButtonWidget(
+                    onPressed: () {
+                      Get.toNamed(Routes.SCAN_QR);
+                    },
+                    text: 'Scan Code',
+                    fontSize: 20,
+                    width: 100.w,
+                    fontWeight: FontWeight.w600,
+                    height: 7.h,
                   ),
-                ],
-              ),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: controller.foods.length,
-                itemBuilder: (context, index) {
-                  final food = controller.foods[index];
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: 1.h),
-                    child: GestureDetector(
-                      onTap: () => Get.toNamed(
-                        Routes.PRODUCT_DETAIL,
-                        arguments: {"code": "1223"},
-                      ),
-                      child: ScannedFoodCard(
-                        image: food['image'] as String,
-                        title: food['title'] as String,
-                        time: food['time'] as String,
-                        price: food['price'] as String,
-                        isHalal: food['isHalal'] as bool,
+                Gap(2.5.h),
+                HomeCards(),
+                Gap(3.h),
+                Row(
+                  children: [
+                    Expanded(
+                      child: AppTextWidget(
+                        text: "Recent Scans",
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                  );
-                },
-              ),
-            ],
+                    controller.showBottomSheet.value == false
+                        ? TextButton(
+                            onPressed: () {},
+                            child: AppTextWidget(
+                              text: "See all",
+                              fontSize: 18,
+                              color: AppColors.secondary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          )
+                        : SizedBox(),
+                  ],
+                ),
+                Obx(() {
+                  final state = controller.getScansResource.value;
+
+                  if (state.isLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.secondary,
+                      ),
+                    );
+                  } else if (state.isError) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(state.errorMessage ?? "Something went wrong"),
+                        SizedBox(height: 8),
+                        ElevatedButton(
+                          onPressed: controller.getScans,
+                          child: Text("Retry"),
+                        ),
+                      ],
+                    );
+                  } else if (state.isSuccess) {
+                    return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: controller.scanHistory.length,
+                      itemBuilder: (context, index) {
+                        final food = controller.scanHistory[index];
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 1.h),
+                          child: GestureDetector(
+                            onTap: () => Get.toNamed(
+                              Routes.PRODUCT_DETAIL,
+                              arguments: {"code": "1223"},
+                            ),
+                            child: ScannedFoodCard(
+                              image: food.image ?? '',
+                              title: food.name,
+                              time: food.scannedAt.toString(),
+                              price: food.brand,
+                              isHalal: food.overallStatus.toString(),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return Container();
+                  }
+                }),
+              ],
+            ),
           ),
         ),
       ),

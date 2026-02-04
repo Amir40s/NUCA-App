@@ -154,7 +154,7 @@ class _SignUpViewState extends State<SignUpView> {
                   AppButtonWidget(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        Get.offAllNamed(Routes.TABS);
+                        controller.signUp(context);
                       }
                     },
                     text: "Register",
@@ -207,7 +207,7 @@ class _SignUpViewState extends State<SignUpView> {
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                         onPressed: () {
-                          Get.offAllNamed(Routes.LOGIN);
+                          controller.signUp(context);
                         },
                         child: const AppTextWidget(
                           text: "Login",

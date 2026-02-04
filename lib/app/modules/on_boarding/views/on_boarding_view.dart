@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:nuca/app/modules/on_boarding/views/components/on_boarding_widget.dart';
 import 'package:nuca/app/routes/app_pages.dart';
+import 'package:nuca/services/shared_preferences_service.dart';
 import 'package:nuca/utils/app_colors.dart';
 import 'package:nuca/utils/app_utils.dart';
 import 'package:nuca/widgets/app_text_widget.dart';
@@ -70,7 +71,7 @@ class OnBoardingView extends GetView<OnBoardingController> {
                     controller.nextPage();
                   },
                   text: controller.currentIndex.value == 1
-                      ? 'Scan first card'
+                      ? 'Continue'
                       : 'Next',
                   fontSize: 20,
                   width: 100.w,
@@ -83,7 +84,8 @@ class OnBoardingView extends GetView<OnBoardingController> {
               Obx(() {
                 return controller.currentIndex.value == 0
                     ? TextButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          await OnboardingPreferences.setOnboardingSeen();
                           Get.offAllNamed(
                             Routes.HOME,
                             arguments: {"showBottomSheet": true},
@@ -109,8 +111,9 @@ class OnBoardingView extends GetView<OnBoardingController> {
                               minimumSize: const Size(0, 0),
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            onPressed: () {
-                              Get.toNamed(Routes.LOGIN);
+                            onPressed: () async {
+                              await OnboardingPreferences.setOnboardingSeen();
+                              Get.offAll(Routes.SIGN_UP);
                             },
                             child: const AppTextWidget(
                               text: "Don't have an account? ",
@@ -125,7 +128,8 @@ class OnBoardingView extends GetView<OnBoardingController> {
                               minimumSize: const Size(0, 0),
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            onPressed: () {
+                            onPressed: () async {
+                              await OnboardingPreferences.setOnboardingSeen();
                               Get.toNamed(Routes.SIGN_UP);
                             },
                             child: const AppTextWidget(

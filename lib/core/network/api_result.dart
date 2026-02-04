@@ -7,7 +7,8 @@ class Success<T> extends ApiResult<T> {
   const Success(this.data);
 }
 
-class Failure<T> extends  ApiResult<T> {
-  final String error;
-  const Failure(this.error);
+class Failure extends ApiResult<Never> {
+  final String message;
+  final int? statusCode;
+  const Failure(this.message, {this.statusCode});
 }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:nuca/app/modules/profile/views/components/profile_tile.dart';
 import 'package:nuca/app/routes/app_pages.dart';
+import 'package:nuca/services/shared_preferences_service.dart';
 import 'package:nuca/utils/app_colors.dart';
 import 'package:nuca/widgets/app_text_widget.dart';
 import 'package:nuca/widgets/custom_button.dart';
@@ -143,7 +144,10 @@ class ProfileView extends GetView<ProfileController> {
               ),
               Gap(3.h),
               AppButtonWidget(
-                onPressed: () {},
+                onPressed: () async {
+                  await SharedPreferencesService.clear();
+                  Get.offAllNamed(Routes.LOGIN);
+                },
                 text: "Log Out",
                 suffixIcon: Icon(Icons.login, color: Colors.white),
                 fontSize: 20,
