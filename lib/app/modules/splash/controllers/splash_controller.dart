@@ -5,7 +5,7 @@ class SplashController extends GetxController {
   @override
   void onInit() {
     Future.delayed(const Duration(seconds: 2), () {
-      Get.offAllNamed(Routes.CHOOSE_LANGUAGE);
+      Get.offAllNamed(Routes.CHOOSE_LANGUAGE, arguments: {"showBack": false});
     });
     super.onInit();
   }

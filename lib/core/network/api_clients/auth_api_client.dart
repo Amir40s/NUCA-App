@@ -1,11 +1,9 @@
 import 'dart:convert';
-
+import 'dart:developer';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-
-import '../../constants/app_constants.dart';
-import '../../services/app_log_service.dart';
-import '../../services/shared_preferences_service.dart';
+import 'package:nuca/services/app_log_service.dart';
+import 'package:nuca/services/shared_preferences_service.dart';
+import 'package:nuca/utils/app_constants.dart';
 import '../api_result.dart';
 
 class AuthApiClient {
@@ -25,7 +23,7 @@ class AuthApiClient {
   /// Handle API Errors
   Failure _handleError(DioException error) {
     if (error.response != null) {
-      debugPrintThrottled('error respose is ======> ${error.response}');
+      log('error response is ======> ${error.response}');
       final responseData = error.response?.data;
 
       if (responseData is Map<String, dynamic> &&
@@ -62,7 +60,7 @@ class AuthApiClient {
         queryParameters: queryParams,
         options: options,
       );
-      print('get status ======> ${response.data['status']}');
+      log('get status ======> ${response.data['status']}');
       LogService.info("✅ Response: \n $endpoint ${response.data}");
 
       return Success(response.data);
@@ -97,17 +95,15 @@ class AuthApiClient {
   }
 
   Future<ApiResult<dynamic>> postResendOtp(
-      String endpoint,
-      dynamic data, {
-        Map<String, dynamic>? files,
-        Map<String, dynamic>? queryParameters,
-      }) async {
+    String endpoint,
+    dynamic data, {
+    Map<String, dynamic>? files,
+    Map<String, dynamic>? queryParameters,
+  }) async {
     try {
       dynamic requestData = jsonEncode(data);
 
-      Options options = Options(
-        contentType: Headers.jsonContentType,
-      );
+      Options options = Options(contentType: Headers.jsonContentType);
 
       Response response = await _dio.post(
         endpoint,
@@ -124,12 +120,13 @@ class AuthApiClient {
       return _handleError(e);
     }
   }
+
   /// **PUT Request**
   Future<ApiResult<dynamic>> put(
-      String endpoint,
-      dynamic data, {
-        Map<String, dynamic>? queryParams,
-      }) async {
+    String endpoint,
+    dynamic data, {
+    Map<String, dynamic>? queryParams,
+  }) async {
     try {
       final requestData = jsonEncode(data);
       final options = Options(contentType: Headers.jsonContentType);
@@ -148,12 +145,13 @@ class AuthApiClient {
       return _handleError(e);
     }
   }
+
   /// **DELETE Request**
   Future<ApiResult<dynamic>> delete(
-      String endpoint, {
-        Map<String, dynamic>? queryParams,
-        dynamic data,
-      }) async {
+    String endpoint, {
+    Map<String, dynamic>? queryParams,
+    dynamic data,
+  }) async {
     try {
       final requestData = data != null ? jsonEncode(data) : null;
       final options = Options(contentType: Headers.jsonContentType);
@@ -172,8 +170,6 @@ class AuthApiClient {
       return _handleError(e);
     }
   }
-
-
 }
 
 class _AuthApiTokenInterceptor extends Interceptor {

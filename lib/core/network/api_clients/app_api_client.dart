@@ -1,11 +1,9 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
-import 'package:easykey/core/services/shared_preferences_service.dart';
+import 'package:nuca/services/app_log_service.dart';
+import 'package:nuca/services/shared_preferences_service.dart';
 import 'package:flutter/foundation.dart';
-
-import '../../constants/app_constants.dart';
-import '../../services/app_log_service.dart';
+import 'package:nuca/utils/app_constants.dart';
 import '../api_result.dart';
 
 class AppApiClient {
@@ -32,8 +30,7 @@ class AppApiClient {
           responseData.containsKey('message')) {
         LogService.warning(responseData['message']);
         return Failure(responseData['message']);
-      }
-      else if (responseData is String) {
+      } else if (responseData is String) {
         return Failure(responseData);
       }
 
@@ -71,20 +68,17 @@ class AppApiClient {
   }
 
   Future<ApiResult<dynamic>> post(
-      String endpoint,
-      dynamic data, {
-        Map<String, dynamic>? queryParams,
-        Map<String, dynamic>? headers,
-
-      }) async {
+    String endpoint,
+    dynamic data, {
+    Map<String, dynamic>? queryParams,
+    Map<String, dynamic>? headers,
+  }) async {
     try {
       Response response = await _dio.post(
         endpoint,
         data: data,
         queryParameters: queryParams,
-        options: Options(
-          headers: headers,
-        ),
+        options: Options(headers: headers),
       );
 
       LogService.info("✅ POST Response: \n $endpoint ${response.data}");
@@ -93,16 +87,10 @@ class AppApiClient {
       return _handleError(e);
     }
   }
-  Future<ApiResult<dynamic>> patch(
-      String endpoint,
-      dynamic data,
-      )
-  async {
+
+  Future<ApiResult<dynamic>> patch(String endpoint, dynamic data) async {
     try {
-      Response response = await _dio.patch(
-        endpoint,
-        data: data,
-      );
+      Response response = await _dio.patch(endpoint, data: data);
 
       LogService.info("✅ PATCH Response: \n $endpoint ${response.data}");
       return Success(response.data);
@@ -110,7 +98,6 @@ class AppApiClient {
       return _handleError(e);
     }
   }
-
 
   /// **PUT Request**
   Future<ApiResult<dynamic>> put(String endpoint, dynamic data) async {
@@ -125,7 +112,6 @@ class AppApiClient {
     }
   }
 }
-
 
 class AuthInterceptor extends Interceptor {
   @override
@@ -172,9 +158,9 @@ class AuthInterceptor extends Interceptor {
 
             if (newAccessToken != null && newRefreshToken != null) {
               await SharedPreferencesService.saveLoginData(
-                 newAccessToken,
-                 newRefreshToken,
-                  err.requestOptions.headers['userId']
+                newAccessToken,
+                newRefreshToken,
+                err.requestOptions.headers['userId'],
               );
 
               LogService.info('New Tokens Saved Successfully');

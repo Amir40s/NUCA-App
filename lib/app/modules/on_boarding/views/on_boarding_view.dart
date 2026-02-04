@@ -84,7 +84,10 @@ class OnBoardingView extends GetView<OnBoardingController> {
                 return controller.currentIndex.value == 0
                     ? TextButton(
                         onPressed: () {
-                          Get.offAllNamed(Routes.HOME);
+                          Get.offAllNamed(
+                            Routes.HOME,
+                            arguments: {"showBottomSheet": true},
+                          );
                         },
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.zero,
@@ -123,10 +126,10 @@ class OnBoardingView extends GetView<OnBoardingController> {
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
                             onPressed: () {
-                              Get.toNamed(Routes.LOGIN);
+                              Get.toNamed(Routes.SIGN_UP);
                             },
                             child: const AppTextWidget(
-                              text: "Login",
+                              text: "Sign Up",
                               color: AppColors.secondary,
                               fontWeight: FontWeight.w600,
                               fontSize: 16,

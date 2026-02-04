@@ -21,7 +21,7 @@ class OnBoardingController extends GetxController {
         curve: Curves.easeInOut,
       );
     } else {
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.HOME, arguments: {"showBottomSheet": true});
     }
   }
 

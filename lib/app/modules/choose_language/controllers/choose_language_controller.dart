@@ -2,8 +2,13 @@ import 'package:get/get.dart';
 
 class ChooseLanguageController extends GetxController {
   final RxString selectedLanguage = "English".obs;
+  late bool showBack;
+
   @override
   void onInit() {
+    showBack = Get.arguments != null && Get.arguments['showBack'] != null
+        ? Get.arguments['showBack']
+        : false;
     super.onInit();
   }
 

@@ -191,7 +191,7 @@ class _SignUpViewState extends State<SignUpView> {
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                         onPressed: () {
-                          Get.toNamed(Routes.LOGIN);
+                          Get.offAllNamed(Routes.LOGIN);
                         },
                         child: const AppTextWidget(
                           text: "Already have an account? ",
@@ -207,7 +207,7 @@ class _SignUpViewState extends State<SignUpView> {
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                         onPressed: () {
-                          Get.toNamed(Routes.LOGIN);
+                          Get.offAllNamed(Routes.LOGIN);
                         },
                         child: const AppTextWidget(
                           text: "Login",

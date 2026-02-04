@@ -18,8 +18,12 @@ class HomeController extends GetxController {
       'isHalal': false,
     },
   ];
+  RxBool showBottomSheet = false.obs;
   @override
   void onInit() {
+    if (Get.arguments != null && Get.arguments['showBottomSheet'] != null) {
+      showBottomSheet.value = Get.arguments['showBottomSheet'];
+    }
     super.onInit();
   }
 

@@ -107,7 +107,10 @@ class ProfileView extends GetView<ProfileController> {
               ProfileTile(
                 icon: Icons.language,
                 title: 'Language',
-                onTap: () => Get.toNamed(Routes.CHOOSE_LANGUAGE),
+                onTap: () => Get.toNamed(
+                  Routes.CHOOSE_LANGUAGE,
+                  arguments: {"showBack": true},
+                ),
                 trailingText: 'English',
               ),
               Gap(1.2.h),

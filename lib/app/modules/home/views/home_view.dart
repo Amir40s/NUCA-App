@@ -103,82 +103,84 @@ class HomeView extends GetView<HomeController> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withAlpha(50),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Center(
-                child: AppTextWidget(
-                  text: 'New here ? Join our community today.',
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.midGrey,
-                ),
-              ),
-              Gap(1.5.h),
-              AppButtonWidget(
-                onPressed: () {
-                  Get.toNamed(Routes.SIGN_UP);
-                },
-                text: "Create Account",
-                fontSize: 20,
-                width: 100.w,
-                fontWeight: FontWeight.w600,
-                height: 7.h,
-              ),
-              Gap(1.5.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      minimumSize: const Size(0, 0),
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
-                    onPressed: () {
-                      Get.toNamed(Routes.LOGIN);
-                    },
-                    child: const AppTextWidget(
-                      text: "Already have an account? ",
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      minimumSize: const Size(0, 0),
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
-                    onPressed: () {
-                      Get.toNamed(Routes.LOGIN);
-                    },
-                    child: const AppTextWidget(
-                      text: "Sign In",
-                      color: AppColors.secondary,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                    ),
+      bottomNavigationBar: controller.showBottomSheet.value == true
+          ? Container(
+              padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withAlpha(50),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
-      ),
+              child: SafeArea(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Center(
+                      child: AppTextWidget(
+                        text: 'New here ? Join our community today.',
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.midGrey,
+                      ),
+                    ),
+                    Gap(1.5.h),
+                    AppButtonWidget(
+                      onPressed: () {
+                        Get.offAllNamed(Routes.SIGN_UP);
+                      },
+                      text: "Create Account",
+                      fontSize: 20,
+                      width: 100.w,
+                      fontWeight: FontWeight.w600,
+                      height: 7.h,
+                    ),
+                    Gap(1.5.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            minimumSize: const Size(0, 0),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          onPressed: () {
+                            Get.offAllNamed(Routes.LOGIN);
+                          },
+                          child: const AppTextWidget(
+                            text: "Already have an account? ",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            minimumSize: const Size(0, 0),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          onPressed: () {
+                            Get.offAllNamed(Routes.LOGIN);
+                          },
+                          child: const AppTextWidget(
+                            text: "Sign In",
+                            color: AppColors.secondary,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : null,
     );
   }
 }
