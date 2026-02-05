@@ -144,13 +144,21 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                   Gap(4.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SocialButton(asset: Assets.icons.google, onTap: () {}),
-                      Gap(6.w),
-                      SocialButton(asset: Assets.icons.apple, onTap: () {}),
-                    ],
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     SocialButton(asset: Assets.icons.google, onTap: () {}),
+                  //     Gap(6.w),
+                  //     SocialButton(asset: Assets.icons.apple, onTap: () {}),
+                  //   ],
+                  // ),
+                  Center(
+                    child: SocialButton(
+                      asset: Assets.icons.google,
+                      onTap: () {
+                        controller.signInWithGoogle(context);
+                      },
+                    ),
                   ),
                   Gap(4.h),
                   Row(

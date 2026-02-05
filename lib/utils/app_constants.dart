@@ -10,6 +10,6 @@ class Endpoints {
   static String getScans = '${AppConstants.apiBaseUrl}history';
   static String createScan = '${AppConstants.apiBaseUrl}scan';
   static String login = '${AppConstants.apiBaseUrl}auth/login';
-  static String googleLogin = '${AppConstants.apiBaseUrl}auth/settings';
+  static String googleLogin = '${AppConstants.apiBaseUrl}auth/google';
   static String sigUp = '${AppConstants.apiBaseUrl}auth/register';
 }

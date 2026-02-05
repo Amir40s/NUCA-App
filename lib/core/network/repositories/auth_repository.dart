@@ -46,6 +46,29 @@ class AuthRepository {
     }
   }
 
+  Future<ApiResult<dynamic>> loginWithGoogle({
+    required String name,
+    required String email,
+    required String deviceId,
+    required bool isLogin,
+  }) async {
+    final data = {
+      "isLogin": isLogin,
+      "deviceId": deviceId,
+      "email": email,
+      "name": name,
+    };
+
+    final result = await _authApi.post(Endpoints.googleLogin, data);
+    if (result is Success) {
+      return Success(result.data);
+    } else if (result is Failure) {
+      return Failure(result.message, statusCode: result.statusCode);
+    } else {
+      return Failure("Unexpected error");
+    }
+  }
+
   // Future<ApiResult> sendOtp({
   //   required String phoneNumber,
   //   required String email,
