@@ -19,8 +19,8 @@ class SplashController extends GetxController {
       return;
     }
 
-    final token = await SharedPreferencesService.getAccessToken();
-    final isExpired = await SharedPreferencesService.isTokenExpired();
+    final token = await SharedPreferencesService.getToken();
+    final isExpired = await SharedPreferencesService.isTokenExpired;
 
     if (token != null && !isExpired) {
       Get.offAllNamed(Routes.TABS);

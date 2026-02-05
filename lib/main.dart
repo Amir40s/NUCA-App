@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:nuca/core/theme/app_theme.dart';
-import 'package:nuca/app/routes/app_pages.dart';
+import '/core/theme/app_theme.dart';
+import '/app/routes/app_pages.dart';
+import '/services/shared_preferences_service.dart';
 import 'package:sizer/sizer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SharedPreferencesService.init();
   runApp(const MyApp());
 }
 

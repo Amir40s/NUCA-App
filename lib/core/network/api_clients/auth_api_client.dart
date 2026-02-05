@@ -130,11 +130,13 @@ class AuthApiClient {
     Map<String, String>? headers,
   }) async {
     try {
+      Options options = _mergeHeaders(headers);
+
       final response = await _dio.put(
         endpoint,
-        data: jsonEncode(data),
+        data: data is FormData ? data : jsonEncode(data), // <-- fix here
         queryParameters: queryParams,
-        options: _mergeHeaders(headers),
+        options: options,
       );
 
       if (response.statusCode != null &&
@@ -186,14 +188,13 @@ class AuthApiClient {
 
 class _AuthApiTokenInterceptor extends Interceptor {
   @override
-  Future<void> onRequest(
-    RequestOptions options,
-    RequestInterceptorHandler handler,
-  ) async {
-    final token = await SharedPreferencesService.getAccessToken();
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    final token = SharedPreferencesService.getToken();
+
     if (token != null && token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
     }
+
     handler.next(options);
   }
 
@@ -203,7 +204,6 @@ class _AuthApiTokenInterceptor extends Interceptor {
       SharedPreferencesService.clear();
       Get.offAllNamed(Routes.LOGIN);
     }
-
     handler.next(err);
   }
 }

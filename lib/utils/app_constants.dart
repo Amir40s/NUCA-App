@@ -9,6 +9,7 @@ class Endpoints {
   static String selectPreferences = '${AppConstants.apiBaseUrl}auth/settings';
   static String getScans = '${AppConstants.apiBaseUrl}history';
   static String createScan = '${AppConstants.apiBaseUrl}scan';
+  static String updateProfile = '${AppConstants.apiBaseUrl}auth/profile';
   static String login = '${AppConstants.apiBaseUrl}auth/login';
   static String googleLogin = '${AppConstants.apiBaseUrl}auth/google';
   static String sigUp = '${AppConstants.apiBaseUrl}auth/register';

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/foundation.dart';
@@ -29,75 +30,103 @@ class JwtDecoder {
 }
 
 class SharedPreferencesService {
+  static late final SharedPreferences _prefs;
   static const String _accessTokenKey = 'accessToken';
+  static String? _accessToken;
+  static Map<String, dynamic>? _decodedToken;
+  static final _profileStreamController =
+      StreamController<Map<String, dynamic>?>.broadcast();
+  static Map<String, dynamic>? _lastEmittedProfile;
+  static Stream<Map<String, dynamic>?> get profileStream async* {
+    if (_lastEmittedProfile != null) yield _lastEmittedProfile;
+    yield* _profileStreamController.stream;
+  }
+
+  static void _notifyProfileChanged() {
+    _lastEmittedProfile = getPayload();
+    _profileStreamController.add(_lastEmittedProfile);
+  }
+
+  static Future<void> init() async {
+    _prefs = await SharedPreferences.getInstance();
+    _accessToken = _prefs.getString(_accessTokenKey);
+    if (_accessToken != null && _accessToken!.isNotEmpty) {
+      _decodedToken = JwtDecoder.decode(_accessToken!);
+      _logPayload();
+    }
+  }
 
   static Future<void> saveAccessToken(String token) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_accessTokenKey, token);
-  }
-
-  static Future<String?> getAccessToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_accessTokenKey);
-  }
-
-  static Future<Map<String, dynamic>?> getDecodedToken() async {
-    final token = await getAccessToken();
-    if (token == null || token.isEmpty) return null;
-    return JwtDecoder.decode(token);
-  }
-
-  static Future<String?> getId() async {
-    final decoded = await getDecodedToken();
-    return decoded?['id']?.toString();
-  }
-
-  static Future<String?> getName() async {
-    final decoded = await getDecodedToken();
-    return decoded?['name']?.toString();
-  }
-
-  static Future<String?> getEmail() async {
-    final decoded = await getDecodedToken();
-    return decoded?['email']?.toString();
-  }
-
-  static Future<String?> getRole() async {
-    final decoded = await getDecodedToken();
-    return decoded?['role']?.toString();
-  }
-
-  static Future<String?> getSubscription() async {
-    final decoded = await getDecodedToken();
-    return decoded?['subscription']?.toString();
-  }
-
-  static Future<String?> getDeviceId() async {
-    final decoded = await getDecodedToken();
-    return decoded?['deviceId']?.toString();
-  }
-
-  static Future<DateTime?> getIssuedAt() async {
-    final decoded = await getDecodedToken();
-    if (decoded == null || !decoded.containsKey('iat')) return null;
-    return DateTime.fromMillisecondsSinceEpoch(decoded['iat'] * 1000);
-  }
-
-  static Future<DateTime?> getExpiry() async {
-    final decoded = await getDecodedToken();
-    if (decoded == null || !decoded.containsKey('exp')) return null;
-    return DateTime.fromMillisecondsSinceEpoch(decoded['exp'] * 1000);
-  }
-
-  static Future<bool> isTokenExpired() async {
-    final expiry = await getExpiry();
-    if (expiry == null) return true;
-    return DateTime.now().isAfter(expiry);
+    await _prefs.setString(_accessTokenKey, token);
+    _accessToken = token;
+    _decodedToken = JwtDecoder.decode(token);
+    _logPayload();
+    _notifyProfileChanged();
   }
 
   static Future<void> clear() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_accessTokenKey);
+    await _prefs.remove(_accessTokenKey);
+    _accessToken = null;
+    _decodedToken = null;
+    _notifyProfileChanged();
+  }
+
+  static String? getToken() => _accessToken;
+  static Map<String, dynamic>? getPayload() => _decodedToken;
+  static String? get id => _decodedToken?['id']?.toString();
+  static String? get name => _decodedToken?['name']?.toString();
+  static String? get email => _decodedToken?['email']?.toString();
+  static String? get role => _decodedToken?['role']?.toString();
+  static String? get subscription => _decodedToken?['subscription']?.toString();
+  static String? get deviceId => _decodedToken?['deviceId']?.toString();
+  static String? get profileImage =>
+      (_decodedToken != null && _decodedToken!.containsKey('profileImage'))
+      ? _decodedToken!['profileImage']?.toString()
+      : null;
+  static int get perMonthScans =>
+      _decodedToken?.containsKey('perMonthScans') == true
+      ? (_decodedToken?['perMonthScans'] as int? ?? 0)
+      : 0;
+  static int get totalScans => _decodedToken?.containsKey('totalScans') == true
+      ? (_decodedToken?['totalScans'] as int? ?? 0)
+      : 0;
+
+  static DateTime? get issuedAt => _decodedToken?['iat'] != null
+      ? DateTime.fromMillisecondsSinceEpoch(_decodedToken!['iat'] * 1000)
+      : null;
+  static DateTime? get expiry => _decodedToken?['exp'] != null
+      ? DateTime.fromMillisecondsSinceEpoch(_decodedToken!['exp'] * 1000)
+      : null;
+  static bool get isTokenExpired =>
+      expiry != null ? DateTime.now().isAfter(expiry!) : true;
+
+  static void _logPayload() {
+    final payload = getPayload();
+
+    if (payload != null) {
+      log("JWT Payload as Object:");
+      payload.forEach((key, value) {
+        log("$key : $value");
+      });
+
+      log("User ID: ${payload['id']}");
+      log("Name: ${payload['name']}");
+      log("Email: ${payload['email']}");
+      log("Role: ${payload['role']}");
+      log("Subscription: ${payload['subscription']}");
+      log("Device ID: ${payload['deviceId']}");
+      log("Profile Image: ${payload['profileImage'] ?? ''}");
+      log("Per Month Scans: ${payload['perMonthScans'] ?? ''}");
+      log("Total Scans: ${payload['totalScans'] ?? ''}");
+      if (payload.containsKey('exp')) {
+        final expiry = DateTime.fromMillisecondsSinceEpoch(
+          payload['exp'] * 1000,
+        );
+        log("Token expires at: $expiry");
+      }
+    } else {
+      log("No token found or not initialized yet!");
+    }
   }
 }
 

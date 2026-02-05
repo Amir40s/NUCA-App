@@ -39,6 +39,7 @@ class LoginController extends GetxController {
         Get.offAllNamed(Routes.TABS);
       },
       onError: (msg) {
+        log(msg);
         AppUtils.showMessage(msg, context: context, isError: true);
       },
     );
@@ -142,10 +143,6 @@ class LoginController extends GetxController {
 
   @override
   void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
-    emailFocus.dispose();
-    passwordFocus.dispose();
     super.onClose();
   }
 }

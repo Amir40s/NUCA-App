@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:nuca/app/modules/profile/views/components/logout_dialogue.dart';
 import 'package:nuca/app/modules/profile/views/components/profile_tile.dart';
 import 'package:nuca/app/routes/app_pages.dart';
 import 'package:nuca/services/shared_preferences_service.dart';
 import 'package:nuca/utils/app_colors.dart';
+import 'package:nuca/utils/export.dart';
 import 'package:nuca/widgets/app_text_widget.dart';
 import 'package:nuca/widgets/custom_button.dart';
 import 'package:nuca/gen/assets.gen.dart';
@@ -23,59 +25,78 @@ class ProfileView extends GetView<ProfileController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 4.h,
-                    backgroundImage: const NetworkImage(
-                      'https://i.pravatar.cc/300',
-                    ),
-                  ),
-                  Gap(4.w),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              StreamBuilder(
+                stream: SharedPreferencesService.profileStream,
+                builder: (context, snapshot) {
+                  final profile = snapshot.data;
+                  return Row(
                     children: [
-                      AppTextWidget(
-                        text: 'Daniel Jones',
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      Gap(0.6.h),
-                      AppTextWidget(
-                        text: 'daniel.jones@example.com',
-                        fontSize: 14,
-                        color: AppColors.midGrey,
-                      ),
-                      Gap(0.8.h),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 3.w,
-                          vertical: 0.6.h,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: AppColors.lightGrey),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.star,
-                              size: 14,
-                              color: Colors.orange,
+                      (profile?['profileImage'] != null &&
+                              profile!['profileImage'].isNotEmpty)
+                          ? CircleAvatar(
+                              radius: 4.h,
+                              backgroundImage: NetworkImage(
+                                profile['profileImage'],
+                              ),
+                            )
+                          : CircleAvatar(
+                              radius: 4.h,
+                              backgroundColor: AppColors.primary,
+                              child: Icon(
+                                LucideIcons.user,
+                                size: 24,
+                                color: Colors.grey.shade700,
+                              ),
                             ),
-                            Gap(1.w),
-                            AppTextWidget(
-                              text: 'Premium',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                      Gap(4.w),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AppTextWidget(
+                            text: profile?['name'] ?? "",
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          Gap(0.6.h),
+                          AppTextWidget(
+                            text: profile?['email'] ?? "",
+                            fontSize: 14,
+                            color: AppColors.midGrey,
+                          ),
+                          Gap(0.8.h),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 3.w,
+                              vertical: 0.6.h,
                             ),
-                          ],
-                        ),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: AppColors.lightGrey),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.star,
+                                  size: 14,
+                                  color: Colors.orange,
+                                ),
+                                Gap(1.w),
+                                AppTextWidget(
+                                  text: (profile?['subscription'] ?? "")
+                                      .toString()
+                                      .capitalizeFirst!,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ],
-                  ),
-                ],
+                  );
+                },
               ),
               Gap(4.h),
               AppTextWidget(
@@ -144,9 +165,8 @@ class ProfileView extends GetView<ProfileController> {
               ),
               Gap(3.h),
               AppButtonWidget(
-                onPressed: () async {
-                  await SharedPreferencesService.clear();
-                  Get.offAllNamed(Routes.LOGIN);
+                onPressed: () {
+                  LogoutDialog.show();
                 },
                 text: "Log Out",
                 suffixIcon: Icon(Icons.login, color: Colors.white),
