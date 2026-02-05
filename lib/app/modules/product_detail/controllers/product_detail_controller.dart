@@ -1,11 +1,12 @@
+import 'dart:developer';
 import 'package:get/get.dart';
 
 class ProductDetailController extends GetxController {
-  //TODO: Implement ProductDetailController
-
-  final count = 0.obs;
+  late String barcode;
   @override
   void onInit() {
+    barcode = Get.arguments['code'] ?? '';
+    log('Received barcode: $barcode');
     super.onInit();
   }
 
@@ -18,6 +19,4 @@ class ProductDetailController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

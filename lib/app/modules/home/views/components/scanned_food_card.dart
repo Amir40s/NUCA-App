@@ -22,13 +22,13 @@ class ScannedFoodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color bgColor = isHalal == "halal"
+    final Color bgColor = isHalal == "HALAL"
         ? const Color(0xFFB7E3BC)
         : const Color(0xFFFFD6CC);
-    final Color badgeColor = isHalal == "halal"
+    final Color badgeColor = isHalal == "HALAL"
         ? const Color(0xFF7ED49A)
         : const Color(0xFFFFA59A);
-    final Color iconColor = isHalal == "halal"
+    final Color iconColor = isHalal == "HALAL"
         ? const Color(0xFF0E7A3B)
         : const Color(0xFFD32F2F);
 
@@ -99,13 +99,13 @@ class ScannedFoodCard extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(
-                    isHalal == "halal" ? Icons.check_circle : Icons.cancel,
+                    isHalal == "HALAL" ? Icons.check_circle : Icons.cancel,
                     color: iconColor,
                     size: 14,
                   ),
                   Gap(1.w),
                   AppTextWidget(
-                    text: isHalal == "halal" ? 'Halal' : 'Haram',
+                    text: isHalal == "HALAL" ? 'Halal' : 'Haram',
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,

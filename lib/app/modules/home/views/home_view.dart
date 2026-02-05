@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:nuca/app/modules/home/views/components/scanned_food_card.dart';
+import 'package:nuca/app/modules/home/views/components/scanned_food_shimmer_card.dart';
 import 'package:nuca/app/modules/home/views/home_cards.dart';
 import 'package:nuca/app/routes/app_pages.dart';
 import 'package:nuca/utils/app_colors.dart';
 import 'package:nuca/widgets/app_text_widget.dart';
 import 'package:nuca/widgets/custom_button.dart';
+import 'package:nuca/widgets/empty_widget.dart';
+import 'package:nuca/widgets/error_widget.dart';
 import 'package:sizer/sizer.dart';
 import '../controllers/home_controller.dart';
 
@@ -43,7 +46,9 @@ class HomeView extends GetView<HomeController> {
                 TextFormField(
                   readOnly: true,
                   textInputAction: TextInputAction.search,
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(Routes.SCAN_HISTORY);
+                  },
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -83,7 +88,9 @@ class HomeView extends GetView<HomeController> {
                     ),
                     controller.showBottomSheet.value == false
                         ? TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.toNamed(Routes.SCAN_HISTORY);
+                            },
                             child: AppTextWidget(
                               text: "See all",
                               fontSize: 18,
@@ -98,28 +105,30 @@ class HomeView extends GetView<HomeController> {
                   final state = controller.getScansResource.value;
 
                   if (state.isLoading) {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.secondary,
+                    return Column(
+                      children: List.generate(
+                        3,
+                        (index) => Padding(
+                          padding: EdgeInsets.only(bottom: 1.h),
+                          child: const ShimmerScannedFoodCard(),
+                        ),
                       ),
                     );
                   } else if (state.isError) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(state.errorMessage ?? "Something went wrong"),
-                        SizedBox(height: 8),
-                        ElevatedButton(
-                          onPressed: controller.getScans,
-                          child: Text("Retry"),
-                        ),
-                      ],
+                    return ErrorRetryWidget(
+                      message: state.errorMessage ?? "Something went wrong",
+                      onRetry: controller.getScans,
                     );
                   } else if (state.isSuccess) {
+                    if (controller.scanHistory.isEmpty) {
+                      return const EmptyWidget(message: "No scans found yet!");
+                    }
                     return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: controller.scanHistory.length,
+                      itemCount: controller.scanHistory.length > 3
+                          ? 3
+                          : controller.scanHistory.length,
                       itemBuilder: (context, index) {
                         final food = controller.scanHistory[index];
                         return Padding(
@@ -134,7 +143,7 @@ class HomeView extends GetView<HomeController> {
                               title: food.name,
                               time: food.scannedAt.toString(),
                               price: food.brand,
-                              isHalal: food.overallStatus.toString(),
+                              isHalal: food.overallStatus,
                             ),
                           ),
                         );
@@ -144,6 +153,7 @@ class HomeView extends GetView<HomeController> {
                     return Container();
                   }
                 }),
+                Gap(10.h),
               ],
             ),
           ),

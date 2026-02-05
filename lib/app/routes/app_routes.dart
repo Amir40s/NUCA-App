@@ -18,6 +18,7 @@ abstract class Routes {
   static const SUBSCRIPTION_MANAGMENT = _Paths.SUBSCRIPTION_MANAGMENT;
   static const HALAL_GUIDLINES = _Paths.HALAL_GUIDLINES;
   static const SPLASH = _Paths.SPLASH;
+  static const SCAN_HISTORY = _Paths.SCAN_HISTORY;
 }
 
 abstract class _Paths {
@@ -37,4 +38,5 @@ abstract class _Paths {
   static const SUBSCRIPTION_MANAGMENT = '/subscription-managment';
   static const HALAL_GUIDLINES = '/halal-guidlines';
   static const SPLASH = '/splash';
+  static const SCAN_HISTORY = '/scan-history';
 }

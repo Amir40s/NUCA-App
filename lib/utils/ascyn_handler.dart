@@ -1,3 +1,5 @@
+// ignore_for_file: curly_braces_in_flow_control_structures, use_build_context_synchronously
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:nuca/core/network/api_result.dart';
@@ -19,7 +21,10 @@ class AsyncHandler {
         if (onLoading != null) {
           onLoading();
         } else {
-          EasyLoading.show(status: loadingMessage);
+          EasyLoading.show(
+            status: loadingMessage,
+            maskType: EasyLoadingMaskType.black,
+          );
         }
       }
 
@@ -36,28 +41,28 @@ class AsyncHandler {
         } else if (context != null) {
           AppUtils.showMessage(context: context, result.message, isError: true);
         } else {
-          debugPrint("Error: ${result.message}");
+          log("Error: ${result.message}");
         }
         return Resource.error(message: result.message);
       } else {
         const unknownError = "Unknown error occurred";
-        if (onError != null)
+        if (onError != null) {
           onError(unknownError);
-        else if (context != null)
+        } else if (context != null)
           AppUtils.showMessage(context: context, unknownError, isError: true);
         else
-          debugPrint("Error: $unknownError");
+          log("Error: $unknownError");
         return const Resource.error(message: unknownError);
       }
     } catch (e) {
       if (showLoading && onLoading == null) EasyLoading.dismiss();
 
-      if (onError != null)
+      if (onError != null) {
         onError(e.toString());
-      else if (context != null)
+      } else if (context != null)
         AppUtils.showMessage(context: context, e.toString(), isError: true);
       else
-        debugPrint("Error: $e");
+        log("Error: $e");
 
       return Resource.error(message: e.toString());
     }

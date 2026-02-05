@@ -2,12 +2,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:nuca/app/modules/scan_qr/views/components/manual_qr_code_bottom_sheet.dart';
-import 'package:nuca/app/routes/app_pages.dart';
-import 'package:nuca/core/network/repositories/user_repo.dart';
-import 'package:nuca/utils/app_utils.dart';
-import 'package:nuca/utils/ascyn_handler.dart';
-import 'package:nuca/utils/async_state_handler.dart';
+import '/app/modules/home/controllers/home_controller.dart';
+import '/app/modules/scan_qr/views/components/manual_qr_code_bottom_sheet.dart';
+import '/app/routes/app_pages.dart';
+import '/core/network/repositories/user_repo.dart';
+import '/utils/app_utils.dart';
+import '/utils/ascyn_handler.dart';
+import '/utils/async_state_handler.dart';
 
 class ScanQrController extends GetxController {
   final UserRepo _userRepo = UserRepo();
@@ -17,6 +18,7 @@ class ScanQrController extends GetxController {
   var isFlashOn = false.obs;
 
   final Rx<Resource<void>> createScanResource = Resource.idle().obs;
+  final homeController = Get.put(HomeController());
   @override
   void onInit() {
     super.onInit();
@@ -28,7 +30,8 @@ class ScanQrController extends GetxController {
     final result = await AsyncHandler.handleResourceCall<void>(
       context: Get.context,
       asyncCall: () => _userRepo.createScan(barcode: barcode),
-      onSuccess: (_) {
+      onSuccess: (_) async {
+        await homeController.getScans();
         AppUtils.showMessage("Product Scan Successfully", context: context);
         Get.toNamed(Routes.PRODUCT_DETAIL, arguments: {'code': barcode});
       },
@@ -63,7 +66,11 @@ class ScanQrController extends GetxController {
     ManualQrCodeBottomSheet(
       manualCodeController: manualCodeController,
       onSubmit: () {
+        final code = manualCodeController.text.trim();
         scannerController.stop();
+        scanProduct(Get.context!, code).then((_) {
+          scannerController.start();
+        });
       },
     ).show();
   }

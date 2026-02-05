@@ -16,6 +16,8 @@ import '../modules/product_detail/bindings/product_detail_binding.dart';
 import '../modules/product_detail/views/product_detail_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/scan_history/bindings/scan_history_binding.dart';
+import '../modules/scan_history/views/scan_history_view.dart';
 import '../modules/scan_qr/bindings/scan_qr_binding.dart';
 import '../modules/scan_qr/views/scan_qr_view.dart';
 import '../modules/select_preferences/bindings/select_preferences_binding.dart';
@@ -113,6 +115,11 @@ class AppPages {
       name: _Paths.SPLASH,
       page: () => const SplashView(),
       binding: SplashBinding(),
+    ),
+    GetPage(
+      name: _Paths.SCAN_HISTORY,
+      page: () => const ScanHistoryView(),
+      binding: ScanHistoryBinding(),
     ),
   ];
 }

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:nuca/app/routes/app_pages.dart';
-import 'package:nuca/utils/app_colors.dart';
-import 'package:nuca/widgets/app_text_widget.dart';
-import 'package:nuca/gen/assets.gen.dart';
+import '/app/routes/app_pages.dart';
+import '/services/shared_preferences_service.dart';
+import '/utils/app_colors.dart';
+import '/widgets/app_text_widget.dart';
+import '/gen/assets.gen.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeCards extends StatelessWidget {
@@ -57,7 +58,7 @@ class HomeCards extends StatelessWidget {
                     TextSpan(
                       children: [
                         TextSpan(
-                          text: '1 / ',
+                          text: '${SharedPreferencesService.perMonthScans} / ',
                           style: TextStyle(
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w700,
@@ -65,7 +66,7 @@ class HomeCards extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: '2',
+                          text: '${SharedPreferencesService.totalScans}',
                           style: TextStyle(
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w700,
