@@ -136,7 +136,7 @@ class HomeView extends GetView<HomeController> {
                           child: GestureDetector(
                             onTap: () => Get.toNamed(
                               Routes.PRODUCT_DETAIL,
-                              arguments: {"code": "1223"},
+                              arguments: {"code": food.barcode},
                             ),
                             child: ScannedFoodCard(
                               image: food.image ?? '',

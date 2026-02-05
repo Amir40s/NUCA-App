@@ -1,6 +1,6 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
+import 'package:nuca/domain/model/scan_detail_model.dart';
 import 'package:nuca/domain/model/scan_history_model.dart';
 import 'package:nuca/services/shared_preferences_service.dart';
 import 'package:nuca/utils/app_constants.dart';
@@ -36,6 +36,24 @@ class UserRepo {
     );
     if (result is Success) {
       final scanHistory = ScanHistoryModel.fromJson(
+        result.data as Map<String, dynamic>,
+      );
+      return Success(scanHistory);
+    } else if (result is Failure) {
+      return Failure(result.message, statusCode: result.statusCode);
+    } else {
+      return Failure("Unexpected error");
+    }
+  }
+
+  Future<ApiResult<ProductResponseModel>> getScanDetails({
+    required String barcode,
+  }) async {
+    final result = await _authApi.post(Endpoints.getScanDetails, {
+      "barcode": barcode,
+    });
+    if (result is Success) {
+      final scanHistory = ProductResponseModel.fromJson(
         result.data as Map<String, dynamic>,
       );
       return Success(scanHistory);

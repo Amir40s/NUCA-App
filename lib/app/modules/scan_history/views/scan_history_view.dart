@@ -117,6 +117,13 @@ class ScanHistoryView extends GetView<ScanHistoryController> {
                         const EmptyWidget(message: "No scans found yet!"),
                       );
                     }
+                    if (controller.filteredScanHistory.isEmpty) {
+                      return buildRefreshable(
+                        const EmptyWidget(
+                          message: "No results found for your search",
+                        ),
+                      );
+                    }
                     return Expanded(
                       child: RefreshIndicator(
                         onRefresh: controller.getScans,
@@ -130,7 +137,7 @@ class ScanHistoryView extends GetView<ScanHistoryController> {
                               child: GestureDetector(
                                 onTap: () => Get.toNamed(
                                   Routes.PRODUCT_DETAIL,
-                                  arguments: {"code": "1223"},
+                                  arguments: {"code": food.barcode},
                                 ),
                                 child: ScannedFoodCard(
                                   image: food.image ?? '',

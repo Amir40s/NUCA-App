@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:nuca/app/routes/app_pages.dart';
+import 'package:nuca/widgets/custom_appbar.dart';
 import 'package:nuca/widgets/custom_button.dart';
 import '/app/modules/choose_language/views/components/language_tile.dart';
 import '../../../../utils/app_utils.dart';
@@ -14,12 +15,7 @@ class ChooseLanguageView extends GetView<ChooseLanguageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Get.back(),
-          icon: Icon(Icons.arrow_back_ios),
-        ),
-      ),
+      appBar: controller.showBack == true ? CustomAppBar(title: "") : null,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(

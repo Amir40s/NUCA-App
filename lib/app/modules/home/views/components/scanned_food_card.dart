@@ -20,17 +20,43 @@ class ScannedFoodCard extends StatelessWidget {
     required this.isHalal,
   });
 
+  bool get isHalalStatus => isHalal.toUpperCase() == "HALAL";
+  bool get isHaramStatus => isHalal.toUpperCase() == "HARAM";
+  bool get isNotSureStatus => !isHalalStatus && !isHaramStatus;
   @override
   Widget build(BuildContext context) {
-    final Color bgColor = isHalal == "HALAL"
+    final bool halal = isHalal.toUpperCase() == "HALAL";
+    final bool haram = isHalal.toUpperCase() == "HARAM";
+
+    final Color bgColor = halal
         ? const Color(0xFFB7E3BC)
-        : const Color(0xFFFFD6CC);
-    final Color badgeColor = isHalal == "HALAL"
+        : haram
+        ? const Color(0xFFFFD6CC)
+        : const Color(0xFFFFF3CD); // Not sure
+
+    final Color badgeColor = halal
         ? const Color(0xFF7ED49A)
-        : const Color(0xFFFFA59A);
-    final Color iconColor = isHalal == "HALAL"
+        : haram
+        ? const Color(0xFFFFA59A)
+        : const Color(0xFFFFE08A);
+
+    final Color iconColor = halal
         ? const Color(0xFF0E7A3B)
-        : const Color(0xFFD32F2F);
+        : haram
+        ? const Color(0xFFD32F2F)
+        : const Color(0xFF856404);
+
+    final IconData statusIcon = halal
+        ? Icons.check_circle
+        : haram
+        ? Icons.cancel
+        : Icons.help_outline;
+
+    final String statusText = halal
+        ? "Halal"
+        : haram
+        ? "Haram"
+        : "Not Sure";
 
     return Container(
       padding: EdgeInsets.all(3.w),
@@ -98,14 +124,10 @@ class ScannedFoodCard extends StatelessWidget {
               fit: BoxFit.scaleDown,
               child: Row(
                 children: [
-                  Icon(
-                    isHalal == "HALAL" ? Icons.check_circle : Icons.cancel,
-                    color: iconColor,
-                    size: 14,
-                  ),
+                  Icon(statusIcon, color: iconColor, size: 14),
                   Gap(1.w),
                   AppTextWidget(
-                    text: isHalal == "HALAL" ? 'Halal' : 'Haram',
+                    text: statusText,
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,

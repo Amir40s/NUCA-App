@@ -9,12 +9,25 @@ import 'package:sizer/sizer.dart';
 enum FoodStatus { halal, haram, unknown }
 
 class HalalStatusCard extends StatelessWidget {
-  final FoodStatus status;
+  final String status;
   const HalalStatusCard({super.key, required this.status});
+  FoodStatus foodStatusFromString(String status) {
+    switch (status.toLowerCase().trim()) {
+      case 'halal':
+      case 'Halal':
+        return FoodStatus.halal;
+      case 'haram':
+      case 'Haram':
+        return FoodStatus.haram;
+      case 'Unknown':
+      default:
+        return FoodStatus.unknown;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final style = getFoodStatusStyle(status);
+    final style = getFoodStatusStyle(foodStatusFromString(status));
 
     return Container(
       padding: EdgeInsets.all(4.w),
@@ -39,7 +52,7 @@ class HalalStatusCard extends StatelessWidget {
           ),
           Gap(1.h),
           AppTextWidget(
-            text: AppUtils.capitalize(status.name),
+            text: status.contains("MUSHBOOH") ? "Not Sure" : status,
             fontWeight: FontWeight.w600,
             color: style.textColor,
             fontSize: 20,
@@ -55,6 +68,7 @@ class NutritionScoreCard extends StatelessWidget {
   final String iconPath;
   final String name;
   final String value;
+  final String status;
 
   const NutritionScoreCard({
     super.key,
@@ -62,7 +76,21 @@ class NutritionScoreCard extends StatelessWidget {
     required this.iconPath,
     required this.name,
     required this.value,
+    required this.status,
   });
+  FoodStatus foodStatusFromString(String status) {
+    switch (status.toLowerCase().trim()) {
+      case 'halal':
+      case 'Halal':
+        return FoodStatus.halal;
+      case 'haram':
+      case 'Haram':
+        return FoodStatus.haram;
+      case 'Unknown':
+      default:
+        return FoodStatus.unknown;
+    }
+  }
 
   Color get gradeColor {
     final value = grade.toUpperCase();
@@ -95,10 +123,13 @@ class NutritionScoreCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = getFoodStatusStyle(foodStatusFromString(status));
     return Container(
       padding: EdgeInsets.all(3.w),
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: grade.isEmpty || grade.contains("UNKNOWN")
+            ? Color(0xFFE6E4DC)
+            : AppColors.primary,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.midGrey),
       ),
@@ -107,7 +138,10 @@ class NutritionScoreCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              SvgPicture.asset(iconPath),
+              SvgPicture.asset(
+                iconPath,
+                colorFilter: ColorFilter.mode(style.textColor, BlendMode.srcIn),
+              ),
               Gap(2.w),
               Expanded(
                 child: AppTextWidget(
@@ -124,26 +158,27 @@ class NutritionScoreCard extends StatelessWidget {
           Row(
             children: [
               AppTextWidget(
-                text: value,
+                text: grade.isEmpty || grade.contains("UNKNOWN") ? "?" : value,
                 fontWeight: FontWeight.w600,
                 fontSize: 20,
               ),
-              const Spacer(),
-              Container(
-                width: 8.w,
-                height: 8.w,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: gradeColor,
-                  shape: BoxShape.circle,
+              if (grade.isNotEmpty || grade.contains("UNKNOWN")) const Spacer(),
+              if (grade.isNotEmpty && !grade.toUpperCase().contains("UNKNOWN"))
+                Container(
+                  width: 8.w,
+                  height: 8.w,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: gradeColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: AppTextWidget(
+                    text: grade.toUpperCase(),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
                 ),
-                child: AppTextWidget(
-                  text: grade.toUpperCase(),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: Colors.white,
-                ),
-              ),
             ],
           ),
         ],
@@ -156,20 +191,38 @@ class InfoCard extends StatelessWidget {
   final String title;
   final String value;
   final String iconPath;
+  final String status;
 
   const InfoCard({
     super.key,
     required this.title,
     required this.value,
     required this.iconPath,
+    required this.status,
   });
+  FoodStatus foodStatusFromString(String status) {
+    switch (status.toLowerCase().trim()) {
+      case 'halal':
+      case 'Halal':
+        return FoodStatus.halal;
+      case 'haram':
+      case 'Haram':
+        return FoodStatus.haram;
+      case 'Unknown':
+      default:
+        return FoodStatus.unknown;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final style = getFoodStatusStyle(foodStatusFromString(status));
     return Container(
       padding: EdgeInsets.all(3.w),
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: value.isEmpty || value.contains("0")
+            ? Color(0xFFE6E4DC)
+            : AppColors.primary,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.midGrey),
       ),
@@ -178,7 +231,10 @@ class InfoCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              SvgPicture.asset(iconPath),
+              SvgPicture.asset(
+                iconPath,
+                colorFilter: ColorFilter.mode(style.textColor, BlendMode.srcIn),
+              ),
               Gap(2.w),
               AppTextWidget(
                 text: title,
@@ -188,7 +244,11 @@ class InfoCard extends StatelessWidget {
             ],
           ),
           Gap(4.w),
-          AppTextWidget(text: value, fontWeight: FontWeight.w600, fontSize: 20),
+          AppTextWidget(
+            text: value.isEmpty || value.contains("0") ? "?" : value,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+          ),
         ],
       ),
     );

@@ -53,6 +53,7 @@ class SharedPreferencesService {
     if (_accessToken != null && _accessToken!.isNotEmpty) {
       _decodedToken = JwtDecoder.decode(_accessToken!);
       _logPayload();
+      _notifyProfileChanged();
     }
   }
 

@@ -8,6 +8,7 @@ class AppConstants {
 class Endpoints {
   static String selectPreferences = '${AppConstants.apiBaseUrl}auth/settings';
   static String getScans = '${AppConstants.apiBaseUrl}history';
+  static String getScanDetails = '${AppConstants.apiBaseUrl}product/lookup';
   static String createScan = '${AppConstants.apiBaseUrl}scan';
   static String updateProfile = '${AppConstants.apiBaseUrl}auth/profile';
   static String login = '${AppConstants.apiBaseUrl}auth/login';
