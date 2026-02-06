@@ -54,13 +54,15 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires access to your photo library to select and upload images.</string>
 	  <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>230947521329-j4lge01b71b788fpostuk0bahng802cl.apps.googleusercontent.com</string>
-            </array>
-        </dict>
-    </array>
+      <array>
+          <dict>
+              <key>CFBundleTypeRole</key>
+              <string>Editor</string>
+              <key>CFBundleURLSchemes</key>
+              <array>
+                  <string>230947521329-j4lge01b71b788fpostuk0bahng802cl.apps.googleusercontent.com</string>
+              </array>
+          </dict>
+      </array>
 </dict>
 </plist>
