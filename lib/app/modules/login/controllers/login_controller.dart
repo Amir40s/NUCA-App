@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -22,6 +23,10 @@ class LoginController extends GetxController {
   final Rx<Resource<void>> loginWithGoogleResource = Resource.idle().obs;
   @override
   void onInit() {
+    if (kDebugMode) {
+      emailController.text = "abdullah@gmail.com";
+      passwordController.text = "12345678";
+    }
     super.onInit();
   }
 
@@ -64,6 +69,7 @@ class LoginController extends GetxController {
     BuildContext context,
     String name,
     String email,
+    String profileImage,
     bool isLogin,
   ) async {
     loginWithGoogleResource.value = Resource.loading();
@@ -75,6 +81,7 @@ class LoginController extends GetxController {
         name: name,
         deviceId: deviceId,
         isLogin: isLogin,
+        profileImage: profileImage,
       ),
       onSuccess: (_) {
         AppUtils.showMessage(
@@ -94,11 +101,12 @@ class LoginController extends GetxController {
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: ['email', 'profile'],
     serverClientId:
-        '230947521329-81v6m2ea9rld4474fguadke1rrjho3g1.apps.googleusercontent.com',
+        '230947521329-j4lge01b71b788fpostuk0bahng802cl.apps.googleusercontent.com',
   );
 
   Future<void> signInWithGoogle(BuildContext context) async {
     try {
+      await _googleSignIn.signOut();
       final GoogleSignInAccount? account = await _googleSignIn.signIn();
 
       if (account == null) {
@@ -117,18 +125,14 @@ class LoginController extends GetxController {
 
       final String name = account.displayName ?? '';
       final String email = account.email;
+      final String? profileImage = account.photoUrl;
 
       log('✅ Google User Logged In');
       log('👤 Name: $name');
       log('📧 Email: $email');
+      log('🖼 Profile Image: $profileImage');
 
-      /// 🚀 CALL BACKEND API HERE
-      await loginWithGoogle(
-        context,
-        name,
-        email,
-        true, // isLogin (false if signup)
-      );
+      await loginWithGoogle(context, name, email, profileImage ?? "", true);
     } catch (e, stack) {
       log('❌ Google Sign-In error');
       log(e.toString());

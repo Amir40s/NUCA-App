@@ -175,9 +175,14 @@ class _SignUpViewState extends State<SignUpView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SocialButton(asset: Assets.icons.google, onTap: () {}),
-                      Gap(6.w),
-                      SocialButton(asset: Assets.icons.apple, onTap: () {}),
+                      SocialButton(
+                        asset: Assets.icons.google,
+                        onTap: () {
+                          controller.signInWithGoogle(context);
+                        },
+                      ),
+                      // Gap(6.w),
+                      // SocialButton(asset: Assets.icons.apple, onTap: () {}),
                     ],
                   ),
                   Gap(4.h),
@@ -207,7 +212,7 @@ class _SignUpViewState extends State<SignUpView> {
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                         onPressed: () {
-                          controller.signUp(context);
+                          Get.offAllNamed(Routes.LOGIN);
                         },
                         child: const AppTextWidget(
                           text: "Login",

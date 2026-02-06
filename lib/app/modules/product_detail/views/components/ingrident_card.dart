@@ -41,12 +41,12 @@ class HalalStatusCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(style.icon, color: style.iconColor, size: 26),
+              Icon(style.icon, color: style.iconColor, size: 22),
               Gap(2.w),
               AppTextWidget(
                 text: "Halal Status",
                 fontWeight: FontWeight.w600,
-                fontSize: 16,
+                fontSize: 15,
               ),
             ],
           ),
@@ -55,7 +55,7 @@ class HalalStatusCard extends StatelessWidget {
             text: status.contains("MUSHBOOH") ? "Not Sure" : status,
             fontWeight: FontWeight.w600,
             color: style.textColor,
-            fontSize: 20,
+            fontSize: 18,
           ),
         ],
       ),
@@ -149,7 +149,7 @@ class NutritionScoreCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   fontWeight: FontWeight.w600,
-                  fontSize: 16,
+                  fontSize: 15,
                 ),
               ),
             ],
@@ -160,13 +160,13 @@ class NutritionScoreCard extends StatelessWidget {
               AppTextWidget(
                 text: grade.isEmpty || grade.contains("UNKNOWN") ? "?" : value,
                 fontWeight: FontWeight.w600,
-                fontSize: 20,
+                fontSize: 18,
               ),
               if (grade.isNotEmpty || grade.contains("UNKNOWN")) const Spacer(),
               if (grade.isNotEmpty && !grade.toUpperCase().contains("UNKNOWN"))
                 Container(
-                  width: 8.w,
-                  height: 8.w,
+                  width: 6.w,
+                  height: 6.w,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: gradeColor,
@@ -175,7 +175,7 @@ class NutritionScoreCard extends StatelessWidget {
                   child: AppTextWidget(
                     text: grade.toUpperCase(),
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 15,
                     color: Colors.white,
                   ),
                 ),
@@ -239,15 +239,15 @@ class InfoCard extends StatelessWidget {
               AppTextWidget(
                 text: title,
                 fontWeight: FontWeight.w600,
-                fontSize: 16,
+                fontSize: 15,
               ),
             ],
           ),
-          Gap(4.w),
+          Gap(1.h),
           AppTextWidget(
             text: value.isEmpty || value.contains("0") ? "?" : value,
             fontWeight: FontWeight.w600,
-            fontSize: 20,
+            fontSize: 18,
           ),
         ],
       ),

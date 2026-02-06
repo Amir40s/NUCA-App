@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:nuca/app/modules/select_preferences/views/components/picker_tile.dart';
 import 'package:nuca/utils/app_utils.dart';
 import 'package:nuca/widgets/app_text_widget.dart';
+import 'package:nuca/widgets/custom_appbar.dart';
 import 'package:nuca/widgets/custom_button.dart';
 import 'package:nuca/gen/assets.gen.dart';
 import 'package:sizer/sizer.dart';
@@ -18,6 +19,7 @@ class SelectPreferencesView extends GetView<SelectPreferencesController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: controller.showBack == true ? CustomAppBar(title: "") : null,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(

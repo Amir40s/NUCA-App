@@ -27,7 +27,7 @@ class LogoutDialog {
               Get.offAllNamed(Routes.LOGIN);
             },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-            child: const AppTextWidget(text: "Logout"),
+            child: const AppTextWidget(text: "Logout", color: Colors.white),
           ),
         ],
       ),

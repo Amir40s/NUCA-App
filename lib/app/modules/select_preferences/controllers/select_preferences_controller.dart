@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:nuca/services/shared_preferences_service.dart';
 import '/app/routes/app_pages.dart';
 import '/core/network/repositories/auth_repository.dart';
 import '/utils/app_utils.dart';
@@ -11,11 +12,17 @@ import '/utils/async_state_handler.dart';
 class SelectPreferencesController extends GetxController {
   final AuthRepository _authRepository = AuthRepository();
   final Rx<Resource<void>> savePreferencesResource = Resource.idle().obs;
-  final RxString selectedCountry = ''.obs;
-  final RxString selectedCurrency = ''.obs;
+  final RxString selectedCountry =
+      (SharedPreferencesService.selectedCountry ?? '').obs;
+  final RxString selectedCurrency =
+      (SharedPreferencesService.selectedCurrency ?? '').obs;
+  late bool showBack;
 
   @override
   void onInit() {
+    showBack = Get.arguments != null && Get.arguments['showBack'] != null
+        ? Get.arguments['showBack']
+        : false;
     super.onInit();
   }
 

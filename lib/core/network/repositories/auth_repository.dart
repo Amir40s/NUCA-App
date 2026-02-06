@@ -51,16 +51,19 @@ class AuthRepository {
     required String email,
     required String deviceId,
     required bool isLogin,
+    required String profileImage,
   }) async {
     final data = {
       "isLogin": isLogin,
       "deviceId": deviceId,
+      "profileImage": profileImage,
       "email": email,
       "name": name,
     };
 
     final result = await _authApi.post(Endpoints.googleLogin, data);
     if (result is Success) {
+      await _storeTokenIfExists(result.data);
       return Success(result.data);
     } else if (result is Failure) {
       return Failure(result.message, statusCode: result.statusCode);

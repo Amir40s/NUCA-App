@@ -82,7 +82,10 @@ class ChooseLanguageView extends GetView<ChooseLanguageController> {
               Gap(3.h),
               AppButtonWidget(
                 onPressed: () {
-                  Get.toNamed(Routes.SELECT_PREFERENCES);
+                  Get.toNamed(
+                    Routes.SELECT_PREFERENCES,
+                    arguments: {"showBack": false},
+                  );
                 },
                 text: "Continue",
                 fontSize: 20,

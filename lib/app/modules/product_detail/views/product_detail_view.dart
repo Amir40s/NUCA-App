@@ -97,8 +97,8 @@ class ProductDetailView extends StatelessWidget {
                           model.image.isNotEmpty
                               ? model.image
                               : Assets.images.food1.path,
-                          width: 28.w,
-                          height: 28.w,
+                          width: 24.w,
+                          height: 24.w,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
                             return Container(
@@ -110,7 +110,7 @@ class ProductDetailView extends StatelessWidget {
                           },
                         ),
                       ),
-                      Gap(2.w),
+                      Gap(3.w),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,13 +137,13 @@ class ProductDetailView extends StatelessWidget {
                     ],
                   ),
                 ),
-                Gap(2.5.h),
+                Gap(1.5.h),
                 AppTextWidget(
                   text: 'Product Information',
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),
-                Gap(2.5.h),
+                Gap(1.5.h),
                 infoRow(
                   HalalStatusCard(status: model.halalStatus),
                   NutritionScoreCard(
@@ -154,7 +154,7 @@ class ProductDetailView extends StatelessWidget {
                     value: 'Grade ${model.nutritionScore}',
                   ),
                 ),
-                Gap(2.h),
+                Gap(1.h),
                 infoRow(
                   InfoCard(
                     status: model.halalStatus,
@@ -171,7 +171,7 @@ class ProductDetailView extends StatelessWidget {
                     iconPath: Assets.icons.sugar,
                   ),
                 ),
-                Gap(2.h),
+                Gap(1.h),
                 infoRow(
                   InfoCard(
                     status: model.halalStatus,
@@ -188,7 +188,7 @@ class ProductDetailView extends StatelessWidget {
                     iconPath: Assets.icons.carbs,
                   ),
                 ),
-                Gap(2.h),
+                Gap(1.h),
                 infoRow(
                   InfoCard(
                     status: model.halalStatus,
@@ -203,7 +203,7 @@ class ProductDetailView extends StatelessWidget {
                     iconPath: Assets.icons.bio,
                   ),
                 ),
-                Gap(2.h),
+                Gap(1.h),
                 infoRow(
                   InfoCard(
                     status: model.halalStatus,
@@ -292,7 +292,7 @@ class ProductDetailView extends StatelessWidget {
       child: Row(
         children: [
           Expanded(child: left),
-          Gap(3.w),
+          Gap(2.5.w),
           Expanded(child: right),
         ],
       ),

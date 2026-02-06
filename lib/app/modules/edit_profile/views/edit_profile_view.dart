@@ -47,7 +47,9 @@ class _EditProfileViewState extends State<EditProfileView> {
                           : NetworkImage(
                               SharedPreferencesService.profileImage ?? "",
                             ),
-                      child: image == null
+                      child:
+                          image == null &&
+                              SharedPreferencesService.profileImage == null
                           ? Icon(
                               LucideIcons.user,
                               size: 4.h,

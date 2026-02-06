@@ -78,6 +78,10 @@ class SharedPreferencesService {
   static String? get name => _decodedToken?['name']?.toString();
   static String? get email => _decodedToken?['email']?.toString();
   static String? get role => _decodedToken?['role']?.toString();
+  static String? get selectedCountry =>
+      _decodedToken?['selectedCountry']?.toString();
+  static String? get selectedCurrency =>
+      _decodedToken?['selectedCurrency']?.toString();
   static String? get subscription => _decodedToken?['subscription']?.toString();
   static String? get deviceId => _decodedToken?['deviceId']?.toString();
   static String? get profileImage =>
@@ -114,6 +118,8 @@ class SharedPreferencesService {
       log("Name: ${payload['name']}");
       log("Email: ${payload['email']}");
       log("Role: ${payload['role']}");
+      log("SelectedCountry: ${payload['selectedCountry']}");
+      log("SelectedCurrency: ${payload['selectedCurrency']}");
       log("Subscription: ${payload['subscription']}");
       log("Device ID: ${payload['deviceId']}");
       log("Profile Image: ${payload['profileImage'] ?? ''}");

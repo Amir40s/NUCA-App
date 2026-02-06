@@ -141,7 +141,10 @@ class ProfileView extends GetView<ProfileController> {
                 image: Assets.icons.coin,
                 title: 'Currency',
                 trailingText: '\$',
-                onTap: () => Get.toNamed(Routes.SELECT_PREFERENCES),
+                onTap: () => Get.toNamed(
+                  Routes.SELECT_PREFERENCES,
+                  arguments: {"showBack": true},
+                ),
               ),
               Gap(3.h),
               AppTextWidget(
