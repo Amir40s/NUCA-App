@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:nuca/app/modules/product_detail/views/components/ingrident_card.dart';
-import 'package:nuca/app/modules/product_detail/views/components/near_shops_card.dart';
-import 'package:nuca/app/routes/app_pages.dart';
-import 'package:nuca/utils/app_colors.dart';
-import 'package:nuca/utils/app_utils.dart';
-import 'package:nuca/widgets/app_text_widget.dart';
-import 'package:nuca/widgets/custom_appbar.dart';
-import 'package:nuca/widgets/custom_button.dart';
-import 'package:nuca/gen/assets.gen.dart';
-import 'package:nuca/widgets/empty_widget.dart';
-import 'package:nuca/widgets/shimmer_widget.dart';
+import '/app/modules/product_detail/views/components/ingrident_card.dart';
+import '/app/modules/product_detail/views/components/near_shops_card.dart';
+import '/utils/app_colors.dart';
+import '/utils/app_utils.dart';
+import '/widgets/app_text_widget.dart';
+import '/widgets/custom_appbar.dart';
+import '/widgets/custom_button.dart';
+import '/gen/assets.gen.dart';
+import '/widgets/empty_widget.dart';
+import '/widgets/shimmer_widget.dart';
 import 'package:sizer/sizer.dart';
 
 import '../controllers/product_detail_controller.dart';
@@ -23,7 +22,7 @@ class ProductDetailView extends StatelessWidget {
     final controller = Get.find<ProductDetailController>();
 
     return Scaffold(
-      appBar: CustomAppBar(title: "Product Details", showShare: true),
+      appBar: CustomAppBar(title: "Product Details"),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
@@ -262,23 +261,21 @@ class ProductDetailView extends StatelessWidget {
                   },
                   text: "Scan Another Product",
                   fontSize: 20,
-                  buttonColor: Colors.red.shade100,
-                  textColor: Colors.red,
                   width: 100.w,
                   fontWeight: FontWeight.w600,
                   height: 7.h,
                 ),
                 Gap(2.h),
-                AppButtonWidget(
-                  onPressed: () {
-                    Get.toNamed(Routes.SUBSCRIPTION);
-                  },
-                  text: "Unlock Store Addresses",
-                  fontSize: 20,
-                  width: 100.w,
-                  fontWeight: FontWeight.w600,
-                  height: 7.h,
-                ),
+                // AppButtonWidget(
+                //   onPressed: () {
+                //     Get.toNamed(Routes.SUBSCRIPTION);
+                //   },
+                //   text: "Unlock Store Addresses",
+                //   fontSize: 20,
+                //   width: 100.w,
+                //   fontWeight: FontWeight.w600,
+                //   height: 7.h,
+                // ),
               ],
             );
           }),

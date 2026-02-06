@@ -49,13 +49,11 @@ class AuthRepository {
   Future<ApiResult<dynamic>> loginWithGoogle({
     required String name,
     required String email,
-    required String deviceId,
     required bool isLogin,
     required String profileImage,
   }) async {
     final data = {
       "isLogin": isLogin,
-      "deviceId": deviceId,
       "profileImage": profileImage,
       "email": email,
       "name": name,
@@ -118,15 +116,17 @@ class AuthRepository {
 
   Future<ApiResult<dynamic>> signUp({
     required String name,
-    required String deviceId,
     required String email,
+    required String currency,
+    required String country,
     required String password,
   }) async {
     final data = {
-      "deviceId": deviceId,
       "name": name,
       "email": email,
       "password": password,
+      "currency": currency,
+      "country": country,
     };
 
     final result = await _authApi.post(Endpoints.sigUp, data);

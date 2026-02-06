@@ -1,7 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
-
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,19 +49,6 @@ class LoginController extends GetxController {
     loginResource.value = result;
   }
 
-  Future<String> _getDeviceUniqueId() async {
-    final deviceInfo = DeviceInfoPlugin();
-
-    if (Platform.isAndroid) {
-      final androidInfo = await deviceInfo.androidInfo;
-      return androidInfo.id;
-    } else if (Platform.isIOS) {
-      final iosInfo = await deviceInfo.iosInfo;
-      return iosInfo.identifierForVendor ?? "";
-    }
-    return "";
-  }
-
   Future<void> loginWithGoogle(
     BuildContext context,
     String name,
@@ -73,13 +57,11 @@ class LoginController extends GetxController {
     bool isLogin,
   ) async {
     loginWithGoogleResource.value = Resource.loading();
-    final deviceId = await _getDeviceUniqueId();
     final result = await AsyncHandler.handleResourceCall<void>(
       context: Get.context,
       asyncCall: () => _authRepository.loginWithGoogle(
         email: email,
         name: name,
-        deviceId: deviceId,
         isLogin: isLogin,
         profileImage: profileImage,
       ),

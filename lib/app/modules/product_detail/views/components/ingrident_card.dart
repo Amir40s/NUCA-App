@@ -46,13 +46,21 @@ class HalalStatusCard extends StatelessWidget {
               AppTextWidget(
                 text: "Halal Status",
                 fontWeight: FontWeight.w600,
+                color: Colors.black87,
                 fontSize: 15,
               ),
             ],
           ),
           Gap(1.h),
           AppTextWidget(
-            text: status.contains("MUSHBOOH") ? "Not Sure" : status,
+            text:
+                (status.toUpperCase().contains("MUSHBOOH") ||
+                    status.toLowerCase() == "Unknown" ||
+                    status.trim().isEmpty ||
+                    status.contains("?") ||
+                    status.toLowerCase() == "N/A")
+                ? "Not Sure"
+                : status,
             fontWeight: FontWeight.w600,
             color: style.textColor,
             fontSize: 18,
@@ -124,12 +132,17 @@ class NutritionScoreCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = getFoodStatusStyle(foodStatusFromString(status));
+    final isUnknown =
+        grade.isEmpty ||
+        grade == "Unknown" ||
+        grade.toLowerCase() == "unknown" ||
+        grade.toUpperCase() == "UNKNOWN" ||
+        grade.contains("?") ||
+        grade.trim().isEmpty;
     return Container(
       padding: EdgeInsets.all(3.w),
       decoration: BoxDecoration(
-        color: grade.isEmpty || grade.contains("UNKNOWN")
-            ? Color(0xFFE6E4DC)
-            : AppColors.primary,
+        color: isUnknown ? Color(0xFFE6E4DC) : AppColors.primary,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.midGrey),
       ),
@@ -150,6 +163,7 @@ class NutritionScoreCard extends StatelessWidget {
                   maxLines: 1,
                   fontWeight: FontWeight.w600,
                   fontSize: 15,
+                  color: Colors.black87,
                 ),
               ),
             ],
@@ -158,12 +172,13 @@ class NutritionScoreCard extends StatelessWidget {
           Row(
             children: [
               AppTextWidget(
-                text: grade.isEmpty || grade.contains("UNKNOWN") ? "?" : value,
+                text: isUnknown ? "?" : value,
                 fontWeight: FontWeight.w600,
+                color: Colors.black87,
                 fontSize: 18,
               ),
-              if (grade.isNotEmpty || grade.contains("UNKNOWN")) const Spacer(),
-              if (grade.isNotEmpty && !grade.toUpperCase().contains("UNKNOWN"))
+              if (!isUnknown) const Spacer(),
+              if (!isUnknown)
                 Container(
                   width: 6.w,
                   height: 6.w,
@@ -217,12 +232,23 @@ class InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = getFoodStatusStyle(foodStatusFromString(status));
+
+    double? numericValue;
+    final match = RegExp(r'^-?\d+(\.\d+)?').firstMatch(value);
+    if (match != null) {
+      numericValue = double.tryParse(match.group(0)!);
+    }
+
+    final isUnknown =
+        value.isEmpty ||
+        value.toLowerCase() == "unknown" ||
+        value.contains("?") ||
+        (numericValue != null && numericValue == 0);
+
     return Container(
       padding: EdgeInsets.all(3.w),
       decoration: BoxDecoration(
-        color: value.isEmpty || value.contains("0")
-            ? Color(0xFFE6E4DC)
-            : AppColors.primary,
+        color: isUnknown ? Color(0xFFE6E4DC) : AppColors.primary,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.midGrey),
       ),
@@ -238,6 +264,7 @@ class InfoCard extends StatelessWidget {
               Gap(2.w),
               AppTextWidget(
                 text: title,
+                color: Colors.black87,
                 fontWeight: FontWeight.w600,
                 fontSize: 15,
               ),
@@ -245,8 +272,9 @@ class InfoCard extends StatelessWidget {
           ),
           Gap(1.h),
           AppTextWidget(
-            text: value.isEmpty || value.contains("0") ? "?" : value,
+            text: isUnknown ? "?" : value,
             fontWeight: FontWeight.w600,
+            color: Colors.black87,
             fontSize: 18,
           ),
         ],

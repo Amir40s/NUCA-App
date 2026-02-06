@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gap/gap.dart';
@@ -175,14 +177,16 @@ class _SignUpViewState extends State<SignUpView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SocialButton(
-                        asset: Assets.icons.google,
-                        onTap: () {
-                          controller.signInWithGoogle(context);
-                        },
-                      ),
-                      // Gap(6.w),
-                      // SocialButton(asset: Assets.icons.apple, onTap: () {}),
+                      if (Platform.isAndroid)
+                        SocialButton(
+                          asset: Assets.icons.google,
+                          onTap: () {
+                            controller.signInWithGoogle(context);
+                          },
+                        ),
+                      if (Platform.isIOS) Gap(6.w),
+                      if (Platform.isIOS)
+                        SocialButton(asset: Assets.icons.apple, onTap: () {}),
                     ],
                   ),
                   Gap(4.h),

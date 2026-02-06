@@ -42,27 +42,7 @@ class HomeView extends GetView<HomeController> {
                   fontWeight: FontWeight.w500,
                   color: AppColors.midGrey,
                 ),
-                Gap(2.h),
-                TextFormField(
-                  readOnly: true,
-                  textInputAction: TextInputAction.search,
-                  onTap: () {
-                    Get.toNamed(Routes.SCAN_HISTORY);
-                  },
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide(color: AppColors.lightGrey),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide(color: AppColors.lightGrey),
-                    ),
-                    prefixIcon: const Icon(Icons.search),
-                    hintText: 'Search by product name, SKU, or model number',
-                  ),
-                ),
-                Gap(2.5.h),
+                Gap(1.5.h),
                 if (controller.showBottomSheet.value == true)
                   AppButtonWidget(
                     onPressed: () {
@@ -75,7 +55,7 @@ class HomeView extends GetView<HomeController> {
                     height: 7.h,
                   ),
                 Gap(2.5.h),
-                HomeCards(),
+                HomeCards(showMoreScans: controller.showBottomSheet.value),
                 Gap(3.h),
                 Row(
                   children: [
@@ -126,8 +106,8 @@ class HomeView extends GetView<HomeController> {
                     return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: controller.scanHistory.length > 3
-                          ? 3
+                      itemCount: controller.scanHistory.length > 4
+                          ? 4
                           : controller.scanHistory.length,
                       itemBuilder: (context, index) {
                         final food = controller.scanHistory[index];

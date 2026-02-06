@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:nuca/utils/app_utils.dart';
 import '/app/routes/app_pages.dart';
 import '/services/shared_preferences_service.dart';
 import '/utils/app_colors.dart';
@@ -10,7 +11,8 @@ import '/gen/assets.gen.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeCards extends StatelessWidget {
-  const HomeCards({super.key});
+  const HomeCards({super.key, required this.showMoreScans});
+  final bool showMoreScans;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +68,11 @@ class HomeCards extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: '${SharedPreferencesService.totalScans}',
+                          text: showMoreScans == true
+                              ? '2'
+                              : SharedPreferencesService.subscription == "free"
+                              ? "20"
+                              : "∞",
                           style: TextStyle(
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w700,
@@ -149,7 +155,15 @@ class HomeCards extends StatelessWidget {
                     width: Get.width,
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.toNamed(Routes.SUBSCRIPTION);
+                        if (showMoreScans == true) {
+                          AppUtils.showMessage(
+                            "Please Login to Buy Premium",
+                            context: context,
+                            isError: true,
+                          );
+                        } else {
+                          Get.toNamed(Routes.SUBSCRIPTION);
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,

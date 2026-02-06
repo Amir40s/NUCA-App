@@ -47,15 +47,17 @@ class SelectPreferencesController extends GetxController {
     final result = await AsyncHandler.handleResourceCall<void>(
       context: Get.context,
       asyncCall: () => _authRepository.selectPreference(
-        deviceId: deviceId,
+        deviceId: SharedPreferencesService.getToken() == null ? deviceId : "",
         country: selectedCountry.value,
         currency: selectedCurrency.value,
       ),
-      onSuccess: (_) {
+      onSuccess: (_) async {
         AppUtils.showMessage(
           "Preferences saved successfully",
           context: context,
         );
+        await CurrencyPreferences.setCurrency(selectedCurrency.value);
+        await CurrencyPreferences.setCountry(selectedCountry.value);
         Get.offAllNamed(Routes.ON_BOARDING);
       },
       onError: (msg) {

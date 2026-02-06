@@ -698,32 +698,41 @@ class IconSnackBar {
     required String label,
     required SnackBarType snackBarType,
     Duration? duration,
-    DismissDirection? direction,
-    SnackBarBehavior behavior = SnackBarBehavior.fixed,
     Color? backgroundColor,
     Color iconColor = Colors.white,
     TextStyle labelTextStyle = const TextStyle(color: Colors.white),
     int? maxLines,
   }) {
-    final snackBar = SnackBar(
-      duration: duration ?? const Duration(seconds: 2),
-      dismissDirection: direction ?? DismissDirection.down,
-      behavior: behavior,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      content: SnackBarWidget(
-        onPressed: () => ScaffoldMessenger.of(context).removeCurrentSnackBar(),
-        label: label,
-
-        backgroundColor: backgroundColor ?? _getBackgroundColor(snackBarType),
-        labelTextStyle: labelTextStyle,
-        iconType: _getIconType(snackBarType),
-        maxLines: maxLines,
-        color: iconColor,
-      ),
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) {
+        return Positioned(
+          top: MediaQuery.of(context).padding.top + 8,
+          left: 8,
+          right: 8,
+          child: Material(
+            color: Colors.transparent,
+            child: SnackBarWidget(
+              onPressed: () =>
+                  ScaffoldMessenger.of(context).removeCurrentSnackBar(),
+              label: label,
+              backgroundColor:
+                  backgroundColor ?? _getBackgroundColor(snackBarType),
+              labelTextStyle: labelTextStyle,
+              iconType: _getIconType(snackBarType),
+              maxLines: maxLines,
+              color: iconColor,
+            ),
+          ),
+        );
+      },
     );
 
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    overlay.insert(overlayEntry);
+
+    Future.delayed(duration ?? const Duration(seconds: 2), () {
+      overlayEntry.remove();
+    });
   }
 
   static Color _getBackgroundColor(SnackBarType type) {
