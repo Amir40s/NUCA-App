@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nuca/core/network/repositories/user_repo.dart';
 import 'package:nuca/domain/model/scan_history_model.dart';
+import 'package:nuca/services/shared_preferences_service.dart';
 import 'package:nuca/utils/ascyn_handler.dart';
 import 'package:nuca/utils/async_state_handler.dart';
 
@@ -43,7 +44,9 @@ class ScanHistoryController extends GetxController {
     final result = await AsyncHandler.handleResourceCall<ScanHistoryModel>(
       showLoading: false,
       context: Get.context,
-      asyncCall: () => _userRepo.getScans(deviceId: deviceId),
+      asyncCall: () => _userRepo.getScans(
+        deviceId: SharedPreferencesService.getToken() == null ? deviceId : "",
+      ),
     );
 
     getScansResource.value = result;

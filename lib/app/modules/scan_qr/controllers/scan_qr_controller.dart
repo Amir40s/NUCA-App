@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:nuca/services/shared_preferences_service.dart';
 import '/app/modules/home/controllers/home_controller.dart';
 import '/app/modules/scan_qr/views/components/manual_qr_code_bottom_sheet.dart';
 import '/app/routes/app_pages.dart';
@@ -26,10 +27,16 @@ class ScanQrController extends GetxController {
 
   Future<void> scanProduct(BuildContext context, String barcode) async {
     createScanResource.value = Resource.loading();
+    final currency = await CurrencyPreferences.getCurrency();
+    final country = await CurrencyPreferences.getCountry();
 
     final result = await AsyncHandler.handleResourceCall<void>(
       context: Get.context,
-      asyncCall: () => _userRepo.createScan(barcode: barcode),
+      asyncCall: () => _userRepo.createScan(
+        barcode: barcode,
+        currency: currency ?? "",
+        country: country ?? "",
+      ),
       onSuccess: (_) async {
         await homeController.getScans();
         AppUtils.showMessage("Product Scan Successfully", context: context);

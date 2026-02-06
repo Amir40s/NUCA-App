@@ -155,3 +155,51 @@ class OnboardingPreferences {
     await prefs.remove(_onboardingSeenKey);
   }
 }
+
+class CurrencyPreferences {
+  static const String _currencyKey = 'selected_currency';
+  static const String _countryKey = 'selected_country';
+
+  // =====================
+  // Currency
+  // =====================
+
+  static Future<void> setCurrency(String currency) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_currencyKey, currency);
+  }
+
+  static Future<String?> getCurrency() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_currencyKey);
+  }
+
+  // =====================
+  // Country
+  // =====================
+
+  static Future<void> setCountry(String country) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_countryKey, country);
+  }
+
+  static Future<String?> getCountry() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_countryKey);
+  }
+
+  // =====================
+  // Helpers
+  // =====================
+
+  static Future<bool> hasPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.containsKey(_currencyKey) && prefs.containsKey(_countryKey);
+  }
+
+  static Future<void> clear() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_currencyKey);
+    await prefs.remove(_countryKey);
+  }
+}

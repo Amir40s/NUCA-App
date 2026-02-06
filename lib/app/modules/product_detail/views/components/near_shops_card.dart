@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -15,12 +14,26 @@ class NearShopsCard extends StatelessWidget {
   final ShopModel? model;
   @override
   Widget build(BuildContext context) {
-    Future<void> openLink(String url) async {
-      final uri = Uri.tryParse(url);
-      if (uri != null && await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
+    Future<void> openMaps(String? addressOrUrl) async {
+      if (addressOrUrl == null || addressOrUrl.isEmpty) return;
+      Uri uri;
+      if (addressOrUrl.startsWith('https://www.google.com/maps')) {
+        uri = Uri.parse(addressOrUrl);
       } else {
-        log('Could not launch $url');
+        final encodedAddress = Uri.encodeComponent(addressOrUrl);
+        uri = Uri.parse(
+          "https://www.google.com/maps/search/?api=1&query=$encodedAddress",
+        );
+      }
+
+      try {
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
+        } else {
+          await launchUrl(uri, mode: LaunchMode.platformDefault);
+        }
+      } catch (e) {
+        log('Error launching Maps for $addressOrUrl: $e');
       }
     }
 
@@ -36,7 +49,7 @@ class NearShopsCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              // Image.asset(Assets.images.food1.path, height: 6.h),
+              Image.asset(Assets.images.food1.path, height: 6.h),
               // ClipRRect(
               //           borderRadius: BorderRadius.circular(12),
               //           child: Image.network(
@@ -81,46 +94,29 @@ class NearShopsCard extends StatelessWidget {
               ),
               Gap(1.h),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppTextWidget(
-                      text: model?.distance ?? '',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                    Gap(1.h),
-                    AppTextWidget(
-                      text: model?.distance ?? '',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      color: AppColors.secondary,
-                    ),
-                  ],
+                child: AppTextWidget(
+                  text: model?.address ?? '',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
               ),
               Gap(2.w),
-              ElevatedButton(
-                onPressed: () => openLink(model?.link ?? ''),
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+              Container(
+                width: 8.w,
+                height: 8.w,
+                decoration: BoxDecoration(
+                  color: AppColors.secondary,
+                  shape: BoxShape.circle,
                 ),
-                child: Row(
-                  children: [
-                    Icon(Icons.near_me, size: 3.h),
-                    AppTextWidget(
-                      text: 'Navigate',
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                  ],
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  alignment: Alignment.center,
+                  onPressed: () {
+                    openMaps(model?.googleMapsLink);
+                  },
+                  icon: Icon(Icons.near_me, size: 2.5.h, color: Colors.white),
                 ),
               ),
             ],

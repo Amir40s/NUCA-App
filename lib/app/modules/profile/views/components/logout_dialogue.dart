@@ -24,7 +24,10 @@ class LogoutDialog {
           ElevatedButton(
             onPressed: () async {
               await SharedPreferencesService.clear();
-              Get.offAllNamed(Routes.LOGIN);
+              Get.offAllNamed(
+                Routes.HOME,
+                arguments: {"showBottomSheet": true},
+              );
             },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
             child: const AppTextWidget(text: "Logout", color: Colors.white),

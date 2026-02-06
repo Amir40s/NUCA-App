@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -144,21 +146,20 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                   Gap(4.h),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     SocialButton(asset: Assets.icons.google, onTap: () {}),
-                  //     Gap(6.w),
-                  //     SocialButton(asset: Assets.icons.apple, onTap: () {}),
-                  //   ],
-                  // ),
-                  Center(
-                    child: SocialButton(
-                      asset: Assets.icons.google,
-                      onTap: () {
-                        controller.signInWithGoogle(context);
-                      },
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (Platform.isAndroid)
+                        SocialButton(
+                          asset: Assets.icons.google,
+                          onTap: () {
+                            controller.signInWithGoogle(context);
+                          },
+                        ),
+                      if (Platform.isIOS) Gap(6.w),
+                      if (Platform.isIOS)
+                        SocialButton(asset: Assets.icons.apple, onTap: () {}),
+                    ],
                   ),
                   Gap(4.h),
                   Row(

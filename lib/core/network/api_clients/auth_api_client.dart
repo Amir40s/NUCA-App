@@ -202,7 +202,7 @@ class _AuthApiTokenInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) {
     if (err.response?.statusCode == 401) {
       SharedPreferencesService.clear();
-      Get.offAllNamed(Routes.LOGIN);
+      Get.offAllNamed(Routes.HOME, arguments: {"showBottomSheet": true});
     }
     handler.next(err);
   }

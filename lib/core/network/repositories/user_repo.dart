@@ -64,9 +64,15 @@ class UserRepo {
     }
   }
 
-  Future<ApiResult<dynamic>> createScan({required String barcode}) async {
+  Future<ApiResult<dynamic>> createScan({
+    required String barcode,
+    required String currency,
+    required String country,
+  }) async {
     final result = await _authApi.post(Endpoints.createScan, {
       "barcode": barcode,
+      "country": country,
+      "currency": currency,
     });
     if (result is Success) {
       return Success(result.data);

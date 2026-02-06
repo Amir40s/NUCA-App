@@ -1,13 +1,12 @@
 import 'dart:developer';
-import 'dart:io';
-
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:nuca/app/modules/select_preferences/controllers/select_preferences_controller.dart';
 import 'package:nuca/app/routes/app_pages.dart';
 import 'package:nuca/core/network/repositories/auth_repository.dart';
+import 'package:nuca/services/shared_preferences_service.dart';
 import 'package:nuca/utils/app_utils.dart';
 import 'package:nuca/utils/ascyn_handler.dart';
 import 'package:nuca/utils/async_state_handler.dart';
@@ -23,6 +22,7 @@ class SignUpController extends GetxController {
 
   final Rx<Resource<void>> signUpResource = Resource.idle().obs;
   final Rx<Resource<void>> signUpWithGoogleResource = Resource.idle().obs;
+  final selectPreferenceController = Get.put(SelectPreferencesController());
   @override
   void onInit() {
     if (kDebugMode) {
@@ -33,30 +33,19 @@ class SignUpController extends GetxController {
     super.onInit();
   }
 
-  Future<String> _getDeviceUniqueId() async {
-    final deviceInfo = DeviceInfoPlugin();
-
-    if (Platform.isAndroid) {
-      final androidInfo = await deviceInfo.androidInfo;
-      return androidInfo.id;
-    } else if (Platform.isIOS) {
-      final iosInfo = await deviceInfo.iosInfo;
-      return iosInfo.identifierForVendor ?? "";
-    }
-    return "";
-  }
-
   Future<void> signUp(BuildContext context) async {
     signUpResource.value = Resource.loading();
-    final deviceId = await _getDeviceUniqueId();
+    final currency = await CurrencyPreferences.getCurrency();
+    final country = await CurrencyPreferences.getCountry();
 
     final result = await AsyncHandler.handleResourceCall<void>(
       context: Get.context,
       asyncCall: () => _authRepository.signUp(
-        deviceId: deviceId,
         name: nameController.text.trim(),
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
+        currency: currency ?? "",
+        country: country ?? "",
       ),
       onSuccess: (_) {
         AppUtils.showMessage("User Created Successfully", context: context);
@@ -78,13 +67,11 @@ class SignUpController extends GetxController {
     bool isLogin,
   ) async {
     signUpWithGoogleResource.value = Resource.loading();
-    final deviceId = await _getDeviceUniqueId();
     final result = await AsyncHandler.handleResourceCall<void>(
       context: Get.context,
       asyncCall: () => _authRepository.loginWithGoogle(
         email: email,
         name: name,
-        deviceId: deviceId,
         isLogin: isLogin,
         profileImage: profileImage,
       ),
