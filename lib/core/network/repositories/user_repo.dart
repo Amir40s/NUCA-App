@@ -68,11 +68,13 @@ class UserRepo {
     required String barcode,
     required String currency,
     required String country,
+    required String deviceId,
   }) async {
     final result = await _authApi.post(Endpoints.createScan, {
       "barcode": barcode,
       "country": country,
       "currency": currency,
+      "deviceId": deviceId,
     });
     if (result is Success) {
       return Success(result.data);

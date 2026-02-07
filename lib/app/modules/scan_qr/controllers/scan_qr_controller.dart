@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -25,16 +27,31 @@ class ScanQrController extends GetxController {
     super.onInit();
   }
 
+  Future<String> _getDeviceUniqueId() async {
+    final deviceInfo = DeviceInfoPlugin();
+
+    if (Platform.isAndroid) {
+      final androidInfo = await deviceInfo.androidInfo;
+      return androidInfo.id;
+    } else if (Platform.isIOS) {
+      final iosInfo = await deviceInfo.iosInfo;
+      return iosInfo.identifierForVendor ?? "";
+    }
+    return "";
+  }
+
   Future<void> scanProduct(BuildContext context, String barcode) async {
     createScanResource.value = Resource.loading();
     final currency = await CurrencyPreferences.getCurrency();
     final country = await CurrencyPreferences.getCountry();
 
+    final deviceId = await _getDeviceUniqueId();
     final result = await AsyncHandler.handleResourceCall<void>(
       context: Get.context,
       asyncCall: () => _userRepo.createScan(
         barcode: barcode,
         currency: currency ?? "",
+        deviceId: SharedPreferencesService.getToken() == null ? deviceId : "",
         country: country ?? "",
       ),
       onSuccess: (_) async {
