@@ -64,6 +64,8 @@ class LoginController extends GetxController {
         name: name,
         isLogin: isLogin,
         profileImage: profileImage,
+        currency: '',
+        country: '',
       ),
       onSuccess: (_) {
         AppUtils.showMessage(

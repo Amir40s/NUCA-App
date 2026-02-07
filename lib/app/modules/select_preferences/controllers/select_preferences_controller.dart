@@ -58,7 +58,11 @@ class SelectPreferencesController extends GetxController {
         );
         await CurrencyPreferences.setCurrency(selectedCurrency.value);
         await CurrencyPreferences.setCountry(selectedCountry.value);
-        Get.offAllNamed(Routes.ON_BOARDING);
+        if (showBack == false) {
+          Get.offAllNamed(Routes.ON_BOARDING);
+        } else {
+          Get.back();
+        }
       },
       onError: (msg) {
         AppUtils.showMessage(msg, context: context, isError: true);

@@ -244,8 +244,9 @@ class ShopModel {
   final String distance;
   final String? discount;
   final String id;
-  final String? address; // New field
-  final String? googleMapsLink; // New field
+  final String? address;
+  final String? googleMapsLink;
+  final String? size;
 
   ShopModel({
     required this.merchant,
@@ -256,10 +257,13 @@ class ShopModel {
     required this.id,
     this.address,
     this.googleMapsLink,
+    this.size,
   });
 
   factory ShopModel.fromJson(Map<String, dynamic>? json) {
     final String? address = json?['address'];
+    final String? size = json?['size'];
+
     return ShopModel(
       merchant: json?['merchant'] ?? '',
       price: json?['price']?.toString() ?? '',
@@ -271,6 +275,7 @@ class ShopModel {
       googleMapsLink: address != null && address.isNotEmpty
           ? "https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(address)}"
           : null,
+      size: size,
     );
   }
 
@@ -283,6 +288,7 @@ class ShopModel {
     String? id,
     String? address,
     String? googleMapsLink,
+    String? size,
   }) {
     return ShopModel(
       merchant: merchant ?? this.merchant,
@@ -293,6 +299,7 @@ class ShopModel {
       id: id ?? this.id,
       address: address ?? this.address,
       googleMapsLink: googleMapsLink ?? this.googleMapsLink,
+      size: size ?? this.size,
     );
   }
 }

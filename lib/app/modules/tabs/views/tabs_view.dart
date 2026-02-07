@@ -3,10 +3,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import 'package:nuca/app/routes/app_pages.dart';
-import 'package:nuca/utils/app_colors.dart';
-import 'package:nuca/widgets/app_text_widget.dart';
-import 'package:nuca/gen/assets.gen.dart';
+import '/app/routes/app_pages.dart';
+import '/utils/app_colors.dart';
+import '/widgets/app_text_widget.dart';
+import '/gen/assets.gen.dart';
 import 'package:sizer/sizer.dart';
 import '../controllers/tabs_controller.dart';
 
@@ -63,6 +63,7 @@ class BottomNavBar extends GetView<TabsController> {
                   children: [
                     GestureDetector(
                       onTap: () => controller.changeTab(0),
+                      behavior: HitTestBehavior.opaque,
                       child: Obx(() {
                         final active = controller.currentIndex.value == 0;
                         return Column(
@@ -90,6 +91,7 @@ class BottomNavBar extends GetView<TabsController> {
                     const Gap(60),
                     GestureDetector(
                       onTap: () => controller.changeTab(2),
+                      behavior: HitTestBehavior.opaque,
                       child: Obx(() {
                         final active = controller.currentIndex.value == 2;
                         return Column(

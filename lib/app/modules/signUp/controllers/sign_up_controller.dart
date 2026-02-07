@@ -38,14 +38,21 @@ class SignUpController extends GetxController {
     final currency = await CurrencyPreferences.getCurrency();
     final country = await CurrencyPreferences.getCountry();
 
+    if (currency == null || country == null) {
+      log("Currency: $currency");
+      log("Country: $country");
+
+      return;
+    }
+
     final result = await AsyncHandler.handleResourceCall<void>(
       context: Get.context,
       asyncCall: () => _authRepository.signUp(
         name: nameController.text.trim(),
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
-        currency: currency ?? "",
-        country: country ?? "",
+        currency: currency,
+        country: country,
       ),
       onSuccess: (_) {
         AppUtils.showMessage("User Created Successfully", context: context);
@@ -67,6 +74,15 @@ class SignUpController extends GetxController {
     bool isLogin,
   ) async {
     signUpWithGoogleResource.value = Resource.loading();
+    final currency = await CurrencyPreferences.getCurrency();
+    final country = await CurrencyPreferences.getCountry();
+
+    if (currency == null || country == null) {
+      log("Currency: $currency");
+      log("Country: $country");
+
+      return;
+    }
     final result = await AsyncHandler.handleResourceCall<void>(
       context: Get.context,
       asyncCall: () => _authRepository.loginWithGoogle(
@@ -74,6 +90,8 @@ class SignUpController extends GetxController {
         name: name,
         isLogin: isLogin,
         profileImage: profileImage,
+        currency: currency,
+        country: country,
       ),
       onSuccess: (_) {
         AppUtils.showMessage(
